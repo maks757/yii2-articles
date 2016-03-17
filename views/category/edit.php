@@ -19,7 +19,7 @@ $this->title = Yii::t('category.view', 'Panel helps');
                 <?= Yii::t('category.view', 'Category')?>
             </div>
             <div class="panel-body">
-                <? $addForm = ActiveForm::begin(['action' => Url::to(['/article/category/save', 'categoryId' => $baseCategory, 'languageId' => $baseLanguage->id]), 'method'=>'post']) ?>
+                <? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $baseCategory, 'languageId' => $baseLanguage->id]), 'method'=>'post']) ?>
                     <?= Html::activeHiddenInput($model, 'category_id', ['value' => $baseCategory]) ?>
                     <?= Html::activeHiddenInput($model, 'language_id', ['value' => $baseLanguage->id]) ?>
                     <div class="btn-group">

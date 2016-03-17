@@ -85,7 +85,7 @@ $this->title = Yii::t('article.view', 'Panel materials');
                         </tbody>
                     <? endif; ?>
                 </table>
-                <a href="<?= Url::to(['/article/article/save', 'language_id' => $baseLanguageUser->id]) ?>"
+                <a href="<?= Url::to(['/articles/article/save', 'language_id' => $baseLanguageUser->id]) ?>"
                    class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= Yii::t('article.view', 'Add') ?>
                 </a>
