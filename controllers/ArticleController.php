@@ -1,6 +1,6 @@
 <?php
 
-namespace common\modules\article\controllers;
+namespace bl\articles\entities\controllers;
 
 use bl\multilang\entities\Language;
 use bl\articles\entities\Article;
