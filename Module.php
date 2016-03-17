@@ -8,7 +8,7 @@ use yii\db\Exception;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'common\modules\article\controllers';
+    public $controllerNamespace = 'bl\articles\controllers';
     /**
      * Multi language
     **/
