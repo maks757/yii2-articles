@@ -22,7 +22,11 @@ class ArticleController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    Yii::$app->controller->module->rules
+                    [
+                        'actions' => ['index', 'save'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [

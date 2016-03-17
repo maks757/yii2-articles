@@ -25,7 +25,11 @@ class CategoryController extends Controller
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [
-                    Yii::$app->controller->module->rules
+                    [
+                        'actions' => ['index', 'save', 'delete'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
                 ],
             ],
             'verbs' => [
