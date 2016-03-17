@@ -53,11 +53,13 @@ $this->title = Yii::t('article.view', 'Panel material');
                         <label class="control-label" for="validarticleform-category_id"><?= Yii::t('article.view', 'Category') ?></label>
                         <select id="validarticleform-category_id" class="form-control" name="ValidArticleForm[category_id]">
                             <option value="">-- <?= Yii::t('article.view', 'Empty') ?> --</option>
-                            <? foreach($categories as $value): ?>
-                                <? if(!empty($value->name)): ?>
-                                <option <?= $baseCategory == $value->category_id ? 'selected' : '' ?> value="<?= $value->category_id?>"><?= $value->name?></option>
-                                <? endif; ?>
-                            <? endforeach; ?>
+                            <? if(!empty($categories)): ?>
+                                <? foreach($categories as $value): ?>
+                                    <? if(!empty($value->name)): ?>
+                                        <option <?= $baseCategory == $value->category_id ? 'selected' : '' ?> value="<?= $value->category_id?>"><?= $value->name?></option>
+                                    <? endif; ?>
+                                <? endforeach; ?>
+                            <? endif; ?>
                         </select>
 
                         <div class="help-block"></div>
