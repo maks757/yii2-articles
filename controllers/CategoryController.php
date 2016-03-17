@@ -13,9 +13,30 @@ use bl\articles\models\ValidCategoryForm;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 class CategoryController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    Yii::$app->controller->module->rules
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public $parent;
     public $language;
     public $module;

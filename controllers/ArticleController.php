@@ -10,9 +10,30 @@ use bl\articles\models\ValidArticleForm;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 
 class ArticleController extends Controller
 {
+
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    Yii::$app->controller->module->rules
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }
+
     public $language;
     public $languages;
     public $parent;

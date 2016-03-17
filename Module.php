@@ -19,7 +19,20 @@ class Module extends \yii\base\Module
      **/
     public $languageName;
 
+
     public $modelLanguage;
+
+    public $rules = [
+        [
+            'actions' => ['login', 'error'],
+            'allow' => true,
+        ],
+        [
+            'actions' => ['logout', 'index', 'category', 'article'],
+            'allow' => true,
+            'roles' => ['@'],
+        ],
+    ];
 
     public function init()
     {
