@@ -22,10 +22,13 @@ $this->title = Yii::t('category.view', 'Panel helps');
                 <? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $baseCategory, 'languageId' => $baseLanguage->id]), 'method'=>'post']) ?>
                     <?= Html::activeHiddenInput($model, 'category_id', ['value' => $baseCategory]) ?>
                     <?= Html::activeHiddenInput($model, 'language_id', ['value' => $baseLanguage->id]) ?>
-                    <div class="btn-group">
-                        <button data-toggle="dropdown" class="btn btn-warning btn-xs dropdown-toggle"> <?= $baseLanguage->name ?> <span class="<?= is_array($languages) ? 'caret' : ''?>"></span></button>
+                    <div class="dropdown">
+                        <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <?= $baseLanguage->name ?>
+                            <span class="<?= is_array($languages) ? 'caret' : ''?>"></span>
+                        </button>
                         <? if(is_array($languages)): ?>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <? foreach($languages as $language): ?>
                                     <li>
                                         <a href="

@@ -26,10 +26,13 @@ $this->title = Yii::t('article.view', 'Panel material');
             </div>
             <div class="panel-body">
                 <? $form = ActiveForm::begin(['method'=>'post']) ?>
-                    <div class="btn-group">
-                        <button data-toggle="dropdown" class="btn btn-warning btn-xs dropdown-toggle"> <?= $baseLanguage->name ?> <span class="<?= is_array($languages) ? 'caret' : ''?>"></span></button>
+                    <div class="dropdown">
+                        <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <?= $baseLanguage->name ?>
+                            <span class="<?= is_array($languages) ? 'caret' : ''?>"></span>
+                        </button>
                         <? if(is_array($languages)): ?>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                                 <? foreach($languages as $language): ?>
                                     <li>
                                         <a href="
