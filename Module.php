@@ -26,7 +26,6 @@ class Module extends \yii\base\Module
     {
         parent::init();
         $this->registerTranslations();
-        $this->defaultController();
         if(!$this->multiLanguage){
             $this->modelLanguage = new LanguageModel();
             if(!empty($this->languageName)) {
@@ -50,9 +49,5 @@ class Module extends \yii\base\Module
             'fileMap'        => [
             ],
         ];
-    }
-
-    public function defaultController(){
-        \Yii::$app->defaultRoute = 'articles/article';
     }
 }
