@@ -25,6 +25,7 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
+        $this->registerTranslations();
         if(!$this->multiLanguage){
             $this->modelLanguage = new LanguageModel();
             if(!empty($this->languageName)) {
