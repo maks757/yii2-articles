@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $baseCategory integer */
 /* @var $parents array CategoryTranslation */
 /* @var $baseLanguage Language */
-$this->title = Yii::t('bl.articles.category.view', 'Panel helps');
+$this->title = Yii::t('bl.articles.category.view', 'Panel article');
 ?>
 
 <div class="row">

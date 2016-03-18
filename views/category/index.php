@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $languages Language[] */
 /* @var $baseLanguage Language */
 
-$this->title = Yii::t('bl.articles.category.view', 'Category panel');
+$this->title = Yii::t('bl.articles.category.view', 'Panel article');
 ?>
 
 <div class="row">
