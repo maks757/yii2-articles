@@ -16,7 +16,7 @@ use yii\filters\VerbFilter;
 class ArticleController extends Controller
 {
 
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'access' => [
@@ -36,7 +36,7 @@ class ArticleController extends Controller
                 ],
             ],
         ];
-    }
+    }*/
 
     public $language;
     public $languages;

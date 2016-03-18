@@ -19,7 +19,7 @@ use yii\filters\VerbFilter;
 class CategoryController extends Controller
 {
 
-    public function behaviors()
+    /*public function behaviors()
     {
         return [
             'access' => [
@@ -39,7 +39,7 @@ class CategoryController extends Controller
                 ],
             ],
         ];
-    }
+    }*/
 
     public $parent;
     public $language;
