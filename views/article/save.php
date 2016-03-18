@@ -15,14 +15,14 @@ use yii\widgets\ActiveForm;
 /* @var $baseLanguage \common\entities\Language*/
 /* @var $languages \common\entities\Language[] */
 /* @var $category array Category */
-$this->title = Yii::t('article.view', 'Panel material');
+$this->title = Yii::t('bl.articles.article.view', 'Panel material');
 ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                     <i class="glyphicon glyphicon-list"></i>
-                    <?= Yii::t('article.view', 'Article')?>
+                    <?= Yii::t('bl.articles.article.view', 'Article')?>
             </div>
             <div class="panel-body">
                 <? $form = ActiveForm::begin(['method'=>'post']) ?>
@@ -50,9 +50,9 @@ $this->title = Yii::t('article.view', 'Panel material');
                     <?= Html::activeHiddenInput($model, 'id', ['value' => $model->id]) ?>
                     <?= Html::activeHiddenInput($model, 'language_id', ['value' => $baseLanguage->id]) ?>
                     <div class="form-group field-validarticleform-category_id required has-success">
-                        <label class="control-label" for="validarticleform-category_id"><?= Yii::t('article.view', 'Category') ?></label>
+                        <label class="control-label" for="validarticleform-category_id"><?= Yii::t('bl.articles.article.view', 'Category') ?></label>
                         <select id="validarticleform-category_id" class="form-control" name="ValidArticleForm[category_id]">
-                            <option value="">-- <?= Yii::t('article.view', 'Empty') ?> --</option>
+                            <option value="">-- <?= Yii::t('bl.articles.article.view', 'Empty') ?> --</option>
                             <? if(!empty($categories)): ?>
                                 <? foreach($categories as $value): ?>
                                     <? if(!empty($value->name)): ?>
@@ -67,7 +67,7 @@ $this->title = Yii::t('article.view', 'Panel material');
                         'inputOptions' => [
                             'class' => 'form-control'
                         ]
-                    ])->label(Yii::t('article.view', 'Name'))
+                    ])->label(Yii::t('bl.articles.article.view', 'Name'))
                     ?>
 
                     <?= $form->field($model, 'short_text', [
@@ -87,7 +87,7 @@ $this->title = Yii::t('article.view', 'Panel material');
                             'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                         ]
                     ])
-                        ->label(Yii::t('article.view', 'Short description'))
+                        ->label(Yii::t('bl.articles.article.view', 'Short description'))
                     ?>
                     <?= $form->field($model, 'text', [
                         'inputOptions' => [
@@ -105,9 +105,9 @@ $this->title = Yii::t('article.view', 'Panel material');
                             ],
                             'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                         ]
-                    ])->label(Yii::t('article.view', 'Full description'))
+                    ])->label(Yii::t('bl.articles.article.view', 'Full description'))
                     ?>
-                    <input type="submit" class="btn btn-primary pull-right" value="<?= Yii::t('article.view', 'Save') ?>">
+                    <input type="submit" class="btn btn-primary pull-right" value="<?= Yii::t('bl.articles.article.view', 'Save') ?>">
                 <? ActiveForm::end(); ?>
             </div>
         </div>

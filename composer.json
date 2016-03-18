@@ -2,7 +2,7 @@
   "name": "black-lamp/yii2-articles",
   "description": "Articles extension for the Yii framework",
   "keywords": ["yii2", "articles"],
-  "version": "0.0.2-dev",
+  "version": "0.0.3-dev",
   "type": "yii2-extension",
   "authors": [
     {

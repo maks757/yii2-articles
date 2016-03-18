@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $languages Language[] */
 /* @var $baseLanguage Language */
 
-$this->title = Yii::t('category.view', 'Category panel');
+$this->title = Yii::t('bl.articles.category.view', 'Category panel');
 ?>
 
 <div class="row">
@@ -16,16 +16,16 @@ $this->title = Yii::t('category.view', 'Category panel');
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('category.view', 'List categories')?>
+                <?= Yii::t('bl.articles.category.view', 'List categories')?>
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
                     <? if(!empty($categories)): ?>
                     <thead>
                     <tr>
-                        <th><?= Yii::t('category.view', 'Name')?></th>
-                        <th><?= Yii::t('category.view', 'Parent name')?></th>
-                        <th><?= Yii::t('category.view', 'Languages')?></th>
+                        <th><?= Yii::t('bl.articles.category.view', 'Name')?></th>
+                        <th><?= Yii::t('bl.articles.category.view', 'Parent name')?></th>
+                        <th><?= Yii::t('bl.articles.category.view', 'Languages')?></th>
                         <th></th>
                     </tr>
                     </thead>
@@ -81,7 +81,7 @@ $this->title = Yii::t('category.view', 'Category panel');
                     <? endif; ?>
                 </table>
                 <a href="<?= Url::to(['/articles/category/save', 'language_id' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
-                    <i class="fa fa-user-plus"></i> <?= Yii::t('category.view', 'Add') ?>
+                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles.category.view', 'Add') ?>
                 </a>
             </div>
         </div>
