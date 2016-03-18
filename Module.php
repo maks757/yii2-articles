@@ -38,4 +38,16 @@ class Module extends \yii\base\Module
             }
         }
     }
+
+    public function registerTranslations()
+    {
+        \Yii::$app->i18n->translations['modules/users/*'] = [
+            'class'          => 'yii\i18n\PhpMessageSource',
+            'sourceLanguage' => 'en-US',
+            'basePath'       => '@vendor/black-lamp/articles/lang',
+            'fileMap'        => [
+            ],
+        ];
+    }
+
 }
