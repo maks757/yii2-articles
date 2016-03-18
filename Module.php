@@ -53,7 +53,7 @@ class Module extends \yii\base\Module
     }
 
     public function defaultController(){
-        \Yii::$app->defaultRoute = 'article';
+        \Yii::$app->defaultRoute = '/article/index';
     }
 
 
