@@ -31,7 +31,6 @@ class m160219_090802_create_articles extends Migration
                 'short_text' => $this->text(),
             ]);
         $this->addForeignKey('article_category_translation_category_fk', 'article_category_translation', 'category_id', 'article_category', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('article_category_translation_language_fk', 'article_category_translation', 'language_id', 'language', 'id', 'CASCADE', 'CASCADE');
 
         $this->createTable('article_translation',
         [
@@ -43,7 +42,6 @@ class m160219_090802_create_articles extends Migration
             'short_text' => $this->text(),
         ]);
         $this->addForeignKey('article_translation_article_fk', 'article_translation', 'article_id', 'article', 'id', 'CASCADE', 'CASCADE');
-        $this->addForeignKey('article_translation_language_fk', 'article_translation', 'language_id', 'language', 'id', 'CASCADE', 'CASCADE');
 
     }
 
