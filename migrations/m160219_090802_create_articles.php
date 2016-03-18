@@ -50,9 +50,7 @@ class m160219_090802_create_articles extends Migration
         $this->dropForeignKey('article_category', 'article_category');
         $this->dropForeignKey('article_category', 'article');
         $this->dropForeignKey('article_category_translation_category', 'article_category_translation');
-        $this->dropForeignKey('article_category_translation_language', 'article_category_translation');
         $this->dropForeignKey('article_translation_article', 'article_translation');
-        $this->dropForeignKey('article_translation_language', 'article_translation');
 
         $this->dropTable('article_category');
         $this->dropTable('article');
