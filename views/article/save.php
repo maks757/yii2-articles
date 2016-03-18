@@ -61,7 +61,6 @@ $this->title = Yii::t('article.view', 'Panel material');
                                 <? endforeach; ?>
                             <? endif; ?>
                         </select>
-
                         <div class="help-block"></div>
                     </div>
                     <?= $form->field($model, 'name', [
