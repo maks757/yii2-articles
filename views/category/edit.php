@@ -1,14 +1,14 @@
 <?php
-use bl\articles\models\CategoryTranslation;
-use bl\multilang\articles\Language;
-use yii\helpers\ArrayHelper;
+use dosamigos\tinymce\TinyMce;
+use bl\multilang\entities\Language;
+use yii\helpers\Html;
 use yii\helpers\Url;
-/* @var $category CategoryTranslation */
-/* @var $baseLanguageUser Language */
+use yii\widgets\ActiveForm;
 /* @var $languages Language[] */
+/* @var $baseCategory integer */
+/* @var $parents array CategoryTranslation */
 /* @var $baseLanguage Language */
-
-$this->title = Yii::t('bl.articles.category.view', 'Panel article');
+$this->title = Yii::t('bl.articles.category.view', 'Panel helps');
 ?>
 
 <div class="row">
@@ -16,73 +16,85 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel article');
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl.articles.category.view', 'List categories')?>
+                <?= Yii::t('bl.articles.category.view', 'Category')?>
             </div>
             <div class="panel-body">
-                <table class="table table-hover">
-                    <? if(!empty($categories)): ?>
-                        <thead>
-                        <tr>
-                            <th><?= Yii::t('bl.articles.category.view', 'Name')?></th>
-                            <th><?= Yii::t('bl.articles.category.view', 'Parent name')?></th>
-                            <th><?= Yii::t('bl.articles.category.view', 'Languages')?></th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <? foreach($categories as $category): ?>
-                            <tr>
-                                <td>
-                                    <? $name = ArrayHelper::index($category->translations, 'language_id'); ?>
-                                    <?= !empty($name[$baseLanguageUser->id]->name) ? $name[$baseLanguageUser->id]->name : $category->translations[0]->name ?>
-                                </td>
-                                <td>
-                                    <? $parent = ArrayHelper::index($categories, 'id')?>
-                                    <? if(!empty($parent[$category->parent_id]->translations)): ?>
-                                        <? $parentLang = ArrayHelper::index($parent[$category->parent_id]->translations, 'language_id'); ?>
-                                        <?= !empty($parentLang[$baseLanguageUser->id]->name) ? $parentLang[$baseLanguageUser->id]->name : $parent[$category->parent_id]->translations[0]->name;?>
-                                    <? endif; ?>
-                                </td>
-                                <td>
-                                    <? if(is_array($languages)):?>
-                                        <? $lang_category = ArrayHelper::index($category->translations, 'language_id')?>
-                                        <? foreach($languages as $language): ?>
-                                            <a href="<?= Url::to([
-                                                'save',
-                                                'categoryId' => $category->id,
-                                                'languageId' => $language->id
-                                            ]) ?>"
-                                               type="button"
-                                               class="btn btn-<?= $lang_category[$language->id] ? 'success' : 'danger'
-                                               ?> btn-xs"><?= $language->name?></a>
-                                        <? endforeach; ?>
-                                    <? else: ?>
-                                        <a href="<?= Url::to([
-                                            'save',
-                                            'categoryId' => $category->id,
-                                            'languageId' => $languages->id
-                                        ]) ?>"
-                                           type="button" class="btn btn-success btn-xs">
-                                            <?= $languages->name?></a>
-                                    <? endif; ?>
-                                </td>
-                                <td>
-                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id, 'languageId' => $baseLanguage->id])?>">
-                                        <i class="glyphicon glyphicon-pencil text-warning"></i>
+                <? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $baseCategory, 'languageId' => $baseLanguage->id]), 'method'=>'post']) ?>
+                <div class="dropdown">
+                    <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        <?= $baseLanguage->name ?>
+                        <span class="<?= is_array($languages) ? 'caret' : ''?>"></span>
+                    </button>
+                    <? if(is_array($languages)): ?>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <? foreach($languages as $language): ?>
+                                <li>
+                                    <a href="
+                                        <?= Url::to([
+                                        'categoryId' => $baseCategory,
+                                        'languageId' => $language->id])?>
+                                        ">
+                                        <?= $language->name?>
                                     </a>
-                                    <br>
-                                    <a href="<?= Url::to(['delete', 'id' => $category->id])?>">
-                                        <i class="glyphicon glyphicon-remove text-danger"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                        <? endforeach; ?>
-                        </tbody>
+                                </li>
+                            <? endforeach; ?>
+                        </ul>
                     <? endif; ?>
-                </table>
-                <a href="<?= Url::to(['/articles/category/save', 'language_id' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
-                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles.category.view', 'Add') ?>
-                </a>
+                </div>
+                <div class="form-group field-toolscategoryform-parent has-success">
+                    <label class="control-label" for="toolscategoryform-parent"><?= Yii::t('bl.articles.category.view', 'Parent') ?></label>
+                    <select id="category-parent_id" class="form-control" name="Category[parent_id]">
+                        <option value="">-- <?= Yii::t('bl.articles.category.view', 'Empty') ?> --</option>
+                        <? foreach($parents as $parent): ?>
+                            <option <?= $category->parent_id === $parent->category->id ? 'selected' : '' ?>  value="<?= $parent->category->id?>"><?= $parent->name ?></option>
+                        <? endforeach; ?>
+                    </select>
+                    <div class="help-block"></div>
+                </div>
+                <?= $addForm->field($category_translation, 'name', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label(Yii::t('bl.articles.category.view', 'Name'))
+                ?>
+                <?= $addForm->field($category_translation, 'short_text', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->widget(TinyMce::className(), [
+                    'options' => ['rows' => 10],
+                    'language' => 'ru',
+                    'clientOptions' => [
+                        'plugins' => [
+                            'textcolor colorpicker',
+                            "advlist autolink lists link charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table contextmenu paste"
+                        ],
+                        'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    ]
+                ])->label(Yii::t('bl.articles.category.view', 'Short description.'))
+                ?>
+                <?= $addForm->field($category_translation, 'text', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->widget(TinyMce::className(), [
+                    'options' => ['rows' => 20],
+                    'language' => 'ru',
+                    'clientOptions' => [
+                        'plugins' => [
+                            'textcolor colorpicker',
+                            "advlist autolink lists link charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table contextmenu paste"
+                        ],
+                        'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    ]
+                ])->label(Yii::t('bl.articles.category.view', 'Full description.'))
+                ?>
+                <input type="submit" class="btn btn-primary pull-right" value="<?= Yii::t('bl.articles.category.view', 'Save') ?>">
+                <? ActiveForm::end(); ?>
             </div>
         </div>
     </div>
