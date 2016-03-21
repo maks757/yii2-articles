@@ -5,10 +5,21 @@
 namespace bl\articles\entities;
 
 use yii\db\ActiveRecord;
-
+/**
+ * Category model
+ *
+ * @property integer $id
+ * @property integer $parent_id
+ */
 class Category extends ActiveRecord
 {
 
+    public function rules()
+    {
+        return [
+            ['parent_id', 'number']
+        ];
+    }
     /**
      * @inheritdoc
      */

@@ -4,18 +4,21 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "help_article".
+ * Article
  *
  * @property integer $id
  * @property integer $category_id
- * @property string $created
- * @property string $updated
- *
- * @property Category $category
- * @property ArticleTranslation[] $helpArticleTranslations
  */
 class Article extends ActiveRecord
 {
+
+    public function rules()
+    {
+        return [
+            ['category_id', 'number'],
+        ];
+    }
+
     /**
      * @inheritdoc
      */

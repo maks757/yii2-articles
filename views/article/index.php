@@ -19,8 +19,8 @@ $this->title = Yii::t('bl.articles.article.view', 'Panel materials');
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                    <i class="glyphicon glyphicon-list"></i>
-                    <?= Yii::t('bl.articles.article.view', 'List materials') ?>
+                <i class="glyphicon glyphicon-list"></i>
+                <?= Yii::t('bl.articles.article.view', 'List materials') ?>
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
@@ -71,13 +71,13 @@ $this->title = Yii::t('bl.articles.article.view', 'Panel materials');
                                                ?> btn-xs"><?= $language->name ?></a>
                                         <? endforeach; ?>
                                     <? else: ?>
-                                    <a href="<?= Url::to([
-                                        'save',
-                                        'articleId' => $article->id,
-                                        'languageId' => $languages->id
-                                    ]) ?>"
-                                       type="button" class="btn btn-success btn-xs">
-                                        <?= $languages->name?></a>
+                                        <a href="<?= Url::to([
+                                            'save',
+                                            'articleId' => $article->id,
+                                            'languageId' => $languages->id
+                                        ]) ?>"
+                                           type="button" class="btn btn-success btn-xs">
+                                            <?= $languages->name?></a>
                                     <? endif; ?>
                                 </td>
                             </tr>
@@ -85,7 +85,7 @@ $this->title = Yii::t('bl.articles.article.view', 'Panel materials');
                         </tbody>
                     <? endif; ?>
                 </table>
-                <a href="<?= Url::to(['/articles/article/save', 'language_id' => $baseLanguageUser->id]) ?>"
+                <a href="<?= Url::to(['/articles/article/save', 'languageId' => $baseLanguage->id]) ?>"
                    class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles.article.view', 'Add') ?>
                 </a>

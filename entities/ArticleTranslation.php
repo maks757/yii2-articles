@@ -5,19 +5,24 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * This is the model class for table "help_article_translation".
+ * ArticleTranslation
  *
  * @property integer $id
+ * @property integer $article_id
  * @property integer $language_id
  * @property string $name
  * @property string $text
  * @property string $short_text
- *
- * @property Language $language
- * @property Article $article
  */
 class ArticleTranslation extends ActiveRecord
 {
+    public function rules()
+    {
+        return [
+            [['language_id', 'article_id'], 'number'],
+            [['name', 'text', 'short_text'], 'string']
+        ];
+    }
     /**
      * @inheritdoc
      */

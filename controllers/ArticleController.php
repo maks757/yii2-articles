@@ -2,6 +2,7 @@
 
 namespace bl\articles\controllers;
 
+use bl\articles\entities\ArticleTranslation;
 use bl\multilang\entities\Language;
 use bl\articles\entities\Article;
 use bl\articles\entities\Category;
@@ -9,6 +10,7 @@ use bl\articles\entities\CategoryTranslation;
 use bl\articles\models\ValidArticleForm;
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
@@ -75,46 +77,49 @@ class ArticleController extends Controller
             ]);
     }
 
-    public function actionSave(){
-        $model = new ValidArticleForm();
-        if($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->save())
-                Yii::$app->getSession()->setFlash('success', 'Data were successfully modified.');
-            else
-                Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
-        }
+    public function actionSave($languageId = null, $articleId = null){
 
         foreach(Category::find()->with('translations')->all() as $value){
             $categories[] = ArrayHelper::index($value->translations, 'language_id')[$this->language->id];
         }
 
-        $data_article = Article::find()->where([
-                'id' => Yii::$app->request->get('articleId')
-            ])
-            ->with(['translations' => function($query) {
-                $query->andWhere(['language_id' => Yii::$app->request->get('languageId')]);
-            }, 'category'])->one();
+        if (!empty($articleId)) {
+            $article = Article::findOne($articleId);
+            $article_translation = ArticleTranslation::find()->where([
+                'article_id' => $articleId,
+                'language_id' => $languageId
+            ])->one();
+            if(empty($article_translation))
+                $article_translation = new ArticleTranslation();
+        } else {
+            $article = new Article();
+            $article_translation = new ArticleTranslation();
+        }
+        if(Yii::$app->request->isPost) {
+            $article->load(Yii::$app->request->post());
+            $article_translation->load(Yii::$app->request->post());
 
-        if(!empty($data_article)) {
-            $article = ArrayHelper::index($data_article->translations, 'language_id');
-            $baseCategory = $data_article->category->id;
-            $model = new ValidArticleForm([
-                'id' => $data_article->id,
-                'category_id' => Yii::$app->request->get('articleId'),
-                'language_id' => Yii::$app->request->get('languageId'),
-                'name' => $article[$this->language->id]->name,
-                'short_text' => $article[$this->language->id]->short_text,
-                'text' => $article[$this->language->id]->text,
-            ]);
+            if($article->validate() && $article_translation->validate())
+            {
+                $article->save();
+                $article_translation->article_id = $article->id;
+                $article_translation->language_id = $languageId;
+                $article_translation->save();
+                Yii::$app->getSession()->setFlash('success', 'Data were successfully modified.');
+                return $this->redirect(Url::toRoute('/articles/article'));
+            }
+            else
+                Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
         }
 
         return $this->render('save',
-        [
-            'model' => $model,
-            'categories' => $categories,
-            'baseCategory' => $baseCategory,
-            'languages' => $this->languages,
-            'baseLanguage' => $this->language,
-        ]);
+            [
+                'article' => $article,
+                'article_translation' => $article_translation,
+                'categories' => $categories,
+                'baseCategory' => $articleId,
+                'languages' => $this->languages,
+                'baseLanguage' => $this->language,
+            ]);
     }
 }
