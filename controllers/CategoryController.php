@@ -57,7 +57,6 @@ class CategoryController extends Controller
 
     public function actionIndex()
     {
-        $model = new ValidCategoryForm();
         $categories = Category::find()
             ->with(['translations' => function($query){
                 $query->addOrderBy(['name' => SORT_ASC]);
@@ -65,7 +64,6 @@ class CategoryController extends Controller
             ->all();
 
         $dataView = [
-            'model' => $model,
             'categories' => $categories,
             'languages' => $this->language,
             'baseLanguageUser' => $this->language
