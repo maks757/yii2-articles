@@ -80,43 +80,47 @@ class CategoryController extends Controller
         return $this->render('index', $dataView);
     }
 
-    public function actionSave()
+    public function actionSave($languageId = null, $categoryId = null)
     {
-        $category_id = \Yii::$app->request->get('categoryId');
-        $model = new ValidCategoryForm();
-        $language = LanguageModel::findDefaultLanguage(Yii::$app->request->get('languageId'), $this->module);
+        $language = LanguageModel::findDefaultLanguage($languageId, $this->module);
 
-        $category = CategoryTranslation::find()
-            ->where(['category_id' => $category_id, 'language_id' => $language->id])
-            ->one();
+        if (!empty($categoryId)) {
+            $category = Category::findOne($categoryId);
+            $category_translation = CategoryTranslation::find()->where([
+                'category_id' => $categoryId,
+                'language_id' => $languageId
+            ])->one();
+            if(empty($category_translation))
+                $category_translation = new CategoryTranslation();
+        } else {
+            $category = new Category();
+            $category_translation = new CategoryTranslation();
+        }
+        if(Yii::$app->request->isPost) {
+            $category->load(Yii::$app->request->post());
+            $category_translation->load(Yii::$app->request->post());
 
-        if ($model->load(\Yii::$app->request->post()) && $model->validate()) {
-            if($model->save()) {
-                Yii::$app->getSession()->setFlash('success', 'Data successfully written.');
-            } else {
-                Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
+            if($category->validate() && $category_translation->validate())
+            {
+                $category->save();
+                $category_translation->category_id = $category->id;
+                $category_translation->language_id = $languageId;
+                $category_translation->save();
+                Yii::$app->getSession()->setFlash('success', 'Data were successfully modified.');
                 return $this->redirect(Url::toRoute('/articles/category'));
             }
-        } elseif(!empty($category)) {
-            $model = new ValidCategoryForm([
-                'parent_id' => $category->category->parent_id,
-                'category_id' => $category_id,
-                'language_id' => $language->id,
-                'name' => $category->name,
-                'text' => $category->text,
-                'short_text' => $category->short_text
-            ]);
+            else
+                Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
         }
-
-
 
         return $this->render('edit',
             [
-                'model' =>  $model,
+                'category' =>  $category,
+                'category_translation' => $category_translation,
                 'parents' => $this->parent,
                 'languages' => $this->language,
                 'baseLanguage' => $language,
-                'baseCategory' => $category_id
+                'baseCategory' => $categoryId
             ]);
     }
 
