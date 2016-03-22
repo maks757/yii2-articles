@@ -80,7 +80,7 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel article');
                     </tbody>
                     <? endif; ?>
                 </table>
-                <a href="<?= Url::to(['/articles/category/save', 'language_id' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
+                <a href="<?= Url::to(['/articles/category/save', 'languageId' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles.category.view', 'Add') ?>
                 </a>
             </div>
