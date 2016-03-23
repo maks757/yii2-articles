@@ -15,11 +15,6 @@ class Module extends \yii\base\Module
     public $multiLanguage = false;
     /**
      * Default params
-     * 'languageName' => 'English';
-     **/
-    public $languageName;
-    /**
-     * Default params
      * 'translate' => 'en-US';
      *
      * basic translations {'en-US', 'ru-RU'}
@@ -45,9 +40,6 @@ class Module extends \yii\base\Module
 
         if(!$this->multiLanguage){
             $this->modelLanguage = new LanguageModel();
-            if(!empty($this->languageName)) {
-                $this->modelLanguage->name = $this->languageName;
-            }
         } else {
             try {
                 Language::find()->one();

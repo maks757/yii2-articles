@@ -12,7 +12,7 @@ use bl\multilang\entities\Language;
 class LanguageModel
 {
     public $id = 1;
-    public $name = 'English';
+    public $name = 'Default';
 
     public static function findDefaultLanguage($languageId, $module) {
         if($module->multiLanguage) {
