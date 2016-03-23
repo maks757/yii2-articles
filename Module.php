@@ -9,6 +9,7 @@ use yii\db\Exception;
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'bl\articles\controllers';
+    public $defaultRoute = 'article';
     /**
      * Multi language
      **/
