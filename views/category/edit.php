@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 /* @var $baseCategory integer */
 /* @var $parents array CategoryTranslation */
 /* @var $baseLanguage Language */
-$this->title = Yii::t('bl.articles.category.view', 'Panel helps');
+$this->title = Yii::t('bl', 'Panel category');
 ?>
 
 <div class="row">
@@ -16,7 +16,7 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel helps');
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl.articles.category.view', 'Category')?>
+                <?= Yii::t('bl', 'Category')?>
             </div>
             <div class="panel-body">
                 <? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $baseCategory, 'languageId' => $baseLanguage->id]), 'method'=>'post']) ?>
@@ -42,9 +42,9 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel helps');
                     <? endif; ?>
                 </div>
                 <div class="form-group field-toolscategoryform-parent has-success">
-                    <label class="control-label" for="toolscategoryform-parent"><?= Yii::t('bl.articles.category.view', 'Parent') ?></label>
+                    <label class="control-label" for="toolscategoryform-parent"><?= Yii::t('bl', 'Parent') ?></label>
                     <select id="category-parent_id" class="form-control" name="Category[parent_id]">
-                        <option value="">-- <?= Yii::t('bl.articles.category.view', 'Empty') ?> --</option>
+                        <option value="">-- <?= Yii::t('bl', 'Empty') ?> --</option>
                         <? foreach($parents as $parent): ?>
                             <option <?= $category->parent_id === $parent->category->id ? 'selected' : '' ?>  value="<?= $parent->category->id?>"><?= $parent->name ?></option>
                         <? endforeach; ?>
@@ -55,7 +55,7 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel helps');
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
-                ])->label(Yii::t('bl.articles.category.view', 'Name'))
+                ])->label(Yii::t('bl', 'Name'))
                 ?>
                 <?= $addForm->field($category_translation, 'short_text', [
                     'inputOptions' => [
@@ -73,7 +73,7 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel helps');
                         ],
                         'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                     ]
-                ])->label(Yii::t('bl.articles.category.view', 'Short description.'))
+                ])->label(Yii::t('bl', 'Short description'))
                 ?>
                 <?= $addForm->field($category_translation, 'text', [
                     'inputOptions' => [
@@ -91,9 +91,9 @@ $this->title = Yii::t('bl.articles.category.view', 'Panel helps');
                         ],
                         'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                     ]
-                ])->label(Yii::t('bl.articles.category.view', 'Full description.'))
+                ])->label(Yii::t('bl', 'Full description'))
                 ?>
-                <input type="submit" class="btn btn-primary pull-right" value="<?= Yii::t('bl.articles.category.view', 'Save') ?>">
+                <input type="submit" class="btn btn-primary pull-right" value="<?= Yii::t('bl', 'Save') ?>">
                 <? ActiveForm::end(); ?>
             </div>
         </div>

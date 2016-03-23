@@ -11,7 +11,7 @@ class Module extends \yii\base\Module
     public $controllerNamespace = 'bl\articles\controllers';
     /**
      * Multi language
-    **/
+     **/
     public $multiLanguage = false;
     /**
      * Default params
@@ -19,6 +19,7 @@ class Module extends \yii\base\Module
      **/
     public $languageName;
 
+    public $translate;
 
     public $modelLanguage;
 
@@ -42,12 +43,17 @@ class Module extends \yii\base\Module
 
     public function registerTranslations()
     {
-        \Yii::$app->i18n->translations['bl.articles.*'] = [
+        if(!empty($this->translate))
+            \Yii::$app->language = $this->translate;
+
+        \Yii::$app->i18n->translations['bl'] = [
             'class'          => 'yii\i18n\PhpMessageSource',
-            'sourceLanguage' => 'en-US',
-            'basePath'       => '@vendor/black-lamp/articles/lang',
+            'basePath'       => '@vendor/black-lamp/yii2-articles/lang',
             'fileMap'        => [
+                'bl' => 'message.php'
             ],
         ];
     }
+
+
 }
