@@ -13,24 +13,24 @@ use yii\helpers\Url;
 /* @var $baseParent CategoryTranslation */
 /* @var $articles ArticleTranslation[] */
 /* @var $baseLanguageUser Language */
-$this->title = Yii::t('bl', 'Panel materials');
+$this->title = Yii::t('bl.articles', 'Panel materials');
 ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl', 'List materials') ?>
+                <?= Yii::t('bl.articles', 'List materials') ?>
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
                     <? if (!empty($articles)): ?>
                         <thead>
                         <tr>
-                            <th class="col-lg-3"><?= Yii::t('bl', 'Title') ?></th>
-                            <th class="col-lg-3"><?= Yii::t('bl', 'Category') ?></th>
-                            <th class="col-lg-3"><?= Yii::t('bl', 'Description') ?></th>
-                            <th class="col-lg-3"><?= Yii::t('bl', 'Language') ?></th>
+                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Title') ?></th>
+                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Category') ?></th>
+                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Description') ?></th>
+                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Language') ?></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -87,7 +87,7 @@ $this->title = Yii::t('bl', 'Panel materials');
                 </table>
                 <a href="<?= Url::to(['/articles/article/save', 'languageId' => $baseLanguage->id]) ?>"
                    class="btn btn-primary pull-right">
-                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl', 'Add') ?>
+                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
                 </a>
             </div>
         </div>

@@ -8,7 +8,7 @@ use yii\helpers\Url;
 /* @var $languages Language[] */
 /* @var $baseLanguage Language */
 //Panel article
-$this->title = Yii::t('bl', 'Hello');
+$this->title = Yii::t('bl.articles', 'Hello');
 ?>
 
 <div class="row">
@@ -16,16 +16,16 @@ $this->title = Yii::t('bl', 'Hello');
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl', 'List categories')?>
+                <?= Yii::t('bl.articles', 'List categories')?>
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
                     <? if(!empty($categories)): ?>
                         <thead>
                         <tr>
-                            <th><?= Yii::t('bl', 'Name')?></th>
-                            <th><?= Yii::t('bl', 'Parent name')?></th>
-                            <th><?= Yii::t('bl', 'Languages')?></th>
+                            <th><?= Yii::t('bl.articles', 'Name')?></th>
+                            <th><?= Yii::t('bl.articles', 'Parent name')?></th>
+                            <th><?= Yii::t('bl.articles', 'Languages')?></th>
                             <th></th>
                         </tr>
                         </thead>
@@ -81,7 +81,7 @@ $this->title = Yii::t('bl', 'Hello');
                     <? endif; ?>
                 </table>
                 <a href="<?= Url::to(['/articles/category/save', 'language_id' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
-                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl', 'Add') ?>
+                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
                 </a>
             </div>
         </div>

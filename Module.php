@@ -18,15 +18,31 @@ class Module extends \yii\base\Module
      * 'languageName' => 'English';
      **/
     public $languageName;
-
+    /**
+     * Default params
+     * 'translate' => 'en-US';
+     *
+     * basic translations {'en-US', 'ru-RU'}
+     **/
     public $translate;
+    /**
+     * If you want to implement their own translations for our module you need to add the module parameter
+     * 'activeTranslate' => false,
+     * and use the category name
+     * 'bl.articles'
+     **/
+    public $activeTranslate = true;
 
     public $modelLanguage;
 
     public function init()
     {
         parent::init();
-        $this->registerTranslations();
+
+        if($this->activeTranslate){
+            $this->registerTranslations();
+        }
+
         if(!$this->multiLanguage){
             $this->modelLanguage = new LanguageModel();
             if(!empty($this->languageName)) {
@@ -46,11 +62,11 @@ class Module extends \yii\base\Module
         if(!empty($this->translate))
             \Yii::$app->language = $this->translate;
 
-        \Yii::$app->i18n->translations['bl'] = [
+        \Yii::$app->i18n->translations['bl.articles'] = [
             'class'          => 'yii\i18n\PhpMessageSource',
             'basePath'       => '@vendor/black-lamp/yii2-articles/lang',
             'fileMap'        => [
-                'bl' => 'message.php'
+                'bl.articles' => 'message.php'
             ],
         ];
     }
