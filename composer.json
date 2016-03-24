@@ -16,7 +16,8 @@
     "yiisoft/yii2-bootstrap": "*",
     "black-lamp/yii2-multi-lang": "*",
     "2amigos/yii2-tinymce-widget": "*",
-    "black-lamp/yii2-seo": "*"
+    "black-lamp/yii2-seo": "*",
+    "black-lamp/yii2-rbac": "*"
   },
   "autoload": {
     "psr-4": {

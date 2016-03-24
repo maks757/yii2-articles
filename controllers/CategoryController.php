@@ -15,72 +15,69 @@ use yii\helpers\Url;
 use yii\web\Controller;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
+use yii\web\ForbiddenHttpException;
 
 class CategoryController extends Controller
 {
 
-    /*public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'save', 'delete'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }*/
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['index', 'save', 'delete'],
+//                        'allow' => true,
+//                        'roles' => ['editArticles'],
+//                    ],
+//                ],
+//            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['post'],
+//                ],
+//            ],
+//        ];
+//    }
 
     public $parent;
-    public $language;
+    public $languages;
     public $module;
 
     public function actions()
     {
         $this->module = Yii::$app->controller->module;
         $this->parent = CategoryTranslation::getAllCategory();
-        if($this->module->multiLanguage)
-            $this->language = Language::find()->where(['show' => true])->all();
-        else
-            $this->language = $this->module->modelLanguage;
+
+        $this->languages = Language::find()->where(['show' => true]);
+        if(!$this->module->multiLanguage)
+            $this->languages = $this->languages->andWhere(['default' => true]);
+        $this->languages = $this->languages->all();
     }
 
     public function actionIndex()
     {
         $categories = Category::find()
             ->with(['translations' => function($query){
-                $query->addOrderBy(['name' => SORT_ASC]);
+                $query = $query->addOrderBy(['name' => SORT_ASC]);
+                    if(!$this->module->multiLanguage)
+                        $query->andWhere(['language_id' => Language::getDefault()->id]);
             }])
             ->all();
 
-        $dataView = [
+        return $this->render('index', [
             'categories' => $categories,
-            'languages' => $this->language,
-            'baseLanguageUser' => $this->language
-        ];
-
-        if($this->module->multiLanguage)
-        {
-            $dataView['baseLanguageUser'] = $language = Language::find()->where(['lang_id' => Yii::$app->language])->one();
-            $dataView['baseLanguage'] = $language = Language::find()->where(['lang_id' => Yii::$app->sourceLanguage])->one();
-        }
-
-        return $this->render('index', $dataView);
+            'languages' => $this->languages,
+            'baseLanguageUser' => $language = Language::find()->where(['lang_id' => Yii::$app->language])->one(),
+            'baseLanguage' => Language::getDefault()
+        ]);
     }
 
     public function actionSave($languageId = null, $categoryId = null)
     {
-        $language = LanguageModel::findDefaultLanguage($languageId, $this->module);
+        $language = Language::findOrDefault($languageId);
 
         if (!empty($categoryId)) {
             $category = Category::findOne($categoryId);
@@ -116,7 +113,7 @@ class CategoryController extends Controller
                 'category' =>  $category,
                 'category_translation' => $category_translation,
                 'parents' => $this->parent,
-                'languages' => $this->language,
+                'languages' => $this->languages,
                 'baseLanguage' => $language,
                 'baseCategory' => $categoryId
             ]);

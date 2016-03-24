@@ -18,29 +18,28 @@ use yii\filters\VerbFilter;
 class ArticleController extends Controller
 {
 
-    /*public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['index', 'save'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-    }*/
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'actions' => ['index', 'save'],
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                    ],
+//                ],
+//            ],
+//            'verbs' => [
+//                'class' => VerbFilter::className(),
+//                'actions' => [
+//                    'logout' => ['post'],
+//                ],
+//            ],
+//        ];
+//    }
 
-    public $language;
     public $languages;
     public $parent;
     public $baseParent;
@@ -48,31 +47,31 @@ class ArticleController extends Controller
     {
         $this->module = Yii::$app->controller->module;
 
-        if($this->module->multiLanguage) {
-            $this->languages = Language::find()->where(['show' => true])->all();
-            $this->language = Language::findOrDefault(Yii::$app->request->get('languageId'));
-        } else {
-            $this->languages = $this->module->modelLanguage;
-            $this->language = $this->module->modelLanguage;
-        }
+        $this->languages = Language::find()->where(['show' => true]);
+        if(!$this->module->multiLanguage)
+            $this->languages = $this->languages->andWhere(['default' => true]);
+        $this->languages = $this->languages->all();
+
         $this->baseParent = CategoryTranslation::getOneCategory(Yii::$app->request->get('articleId'));
         $this->parent = CategoryTranslation::getAllCategory();
     }
 
     public function actionIndex()
     {
-        $article = Article::find()->with(['category', 'category.translations', 'translations'])->all();
-        if($this->module->multiLanguage)
-            $userLanguage = Language::find()->where(['lang_id' => Yii::$app->language])->one();
-        else
-            $userLanguage = $this->module->modelLanguage;
+        $article = Article::find()->with(['category', 'category.translations']);
+            if(!$this->module->multiLanguage)
+                $article = $article->with(['translations' => function($query){
+                    $query->andWhere(['language_id' => Language::getDefault()->id]);
+                }]);
+            $article = $article->all();
+        $userLanguage = Language::find()->where(['lang_id' => Yii::$app->language])->one();
         return $this->render('index',
             [
                 'articles' => $article,
                 'parents' => $this->parent,
                 'languages' => $this->languages,
                 'baseLanguageUser' => $userLanguage,
-                'baseLanguage' => $this->language,
+                'baseLanguage' => Language::getDefault(),
                 'baseParent' => $this->baseParent,
             ]);
     }
@@ -80,7 +79,7 @@ class ArticleController extends Controller
     public function actionSave($languageId = null, $articleId = null){
 
         foreach(Category::find()->with('translations')->all() as $value){
-            $categories[] = ArrayHelper::index($value->translations, 'language_id')[$this->language->id];
+            $categories[] = ArrayHelper::index($value->translations, 'language_id')[Language::getDefault()->id];
         }
 
         if (!empty($articleId)) {
@@ -119,7 +118,7 @@ class ArticleController extends Controller
                 'categories' => $categories,
                 'baseCategory' => $articleId,
                 'languages' => $this->languages,
-                'baseLanguage' => $this->language,
+                'baseLanguage' => Language::findOrDefault(Yii::$app->request->get('languageId')),
             ]);
     }
 }

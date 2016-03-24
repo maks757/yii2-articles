@@ -5,10 +5,13 @@ namespace bl\articles;
 use bl\multilang\entities\Language;
 use bl\articles\models\LanguageModel;
 use yii\db\Exception;
+use yii\helpers\Console;
+use yii\web\Application;
 
 class Module extends \yii\base\Module
 {
     public $controllerNamespace = 'bl\articles\controllers';
+
     public $defaultRoute = 'article';
     /**
      * Multi language
@@ -29,24 +32,11 @@ class Module extends \yii\base\Module
      **/
     public $activeTranslate = true;
 
-    public $modelLanguage;
-
     public function init()
     {
         parent::init();
-
         if($this->activeTranslate){
             $this->registerTranslations();
-        }
-
-        if(!$this->multiLanguage){
-            $this->modelLanguage = new LanguageModel();
-        } else {
-            try {
-                Language::find()->one();
-            } catch(Exception $ex) {
-                throw new Exception('Table "language" not exist, please preset the desired module - "path module", or not use multi-lingual version of the module.');
-            }
         }
     }
 

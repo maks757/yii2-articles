@@ -67,7 +67,7 @@ $this->title = Yii::t('bl.articles', 'Hello');
                                     <? endif; ?>
                                 </td>
                                 <td>
-                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id])?>">
+                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id, 'languageId' => $baseLanguage->id])?>">
                                         <i class="glyphicon glyphicon-pencil text-warning"></i>
                                     </a>
                                     <br>
@@ -80,7 +80,7 @@ $this->title = Yii::t('bl.articles', 'Hello');
                         </tbody>
                     <? endif; ?>
                 </table>
-                <a href="<?= Url::to(['/articles/category/save', 'language_id' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
+                <a href="<?= Url::to(['/articles/category/save', 'languageId' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
                 </a>
             </div>
