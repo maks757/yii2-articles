@@ -2,12 +2,16 @@
   "name": "black-lamp/yii2-articles",
   "description": "Articles extension for the Yii framework",
   "keywords": ["yii2", "articles"],
-  "version": "0.1.0",
+  "version": "0.1.2",
   "type": "yii2-extension",
   "authors": [
     {
       "name": "Cherednyk Maxim",
       "email": "maks757q@gmail.com"
+    },
+    {
+      "name": "Gutsulyak Vadim",
+      "email": "guts.vadimq@gmail.com"
     }
   ],
   "require": {
