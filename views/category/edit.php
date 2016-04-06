@@ -1,13 +1,17 @@
 <?php
+use bl\articles\entities\Category;
+use bl\articles\entities\CategoryTranslation;
 use dosamigos\tinymce\TinyMce;
 use bl\multilang\entities\Language;
-use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+
+/* @var $category Category */
+/* @var $category_translation CategoryTranslation */
 /* @var $languages Language[] */
-/* @var $baseCategory integer */
-/* @var $parents array CategoryTranslation */
-/* @var $baseLanguage Language */
+/* @var $selectedLanguage Language */
+/* @var $categories Category[] */
+
 $this->title = Yii::t('bl.articles', 'Panel category');
 ?>
 
@@ -19,35 +23,41 @@ $this->title = Yii::t('bl.articles', 'Panel category');
                 <?= Yii::t('bl.articles', 'Category')?>
             </div>
             <div class="panel-body">
-                <? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $baseCategory, 'languageId' => $baseLanguage->id]), 'method'=>'post']) ?>
-                <div class="dropdown">
-                    <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        <?= $baseLanguage->name ?>
-                        <span class="<?= is_array($languages) ? 'caret' : ''?>"></span>
-                    </button>
-                    <? if(is_array($languages)): ?>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <? foreach($languages as $language): ?>
-                                <li>
-                                    <a href="
-                                        <?= Url::to([
-                                        'categoryId' => $baseCategory,
-                                        'languageId' => $language->id])?>
-                                        ">
-                                        <?= $language->name?>
-                                    </a>
-                                </li>
-                            <? endforeach; ?>
-                        </ul>
-                    <? endif; ?>
-                </div>
+                <? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $category->id, 'languageId' => $selectedLanguage->id]), 'method'=>'post']) ?>
+                <? if(count($languages) > 1): ?>
+                    <div class="dropdown">
+                        <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <?= $selectedLanguage->name ?>
+                            <span class="caret"></span>
+                        </button>
+                        <? if(count($languages) > 1): ?>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                <? foreach($languages as $language): ?>
+                                    <li>
+                                        <a href="
+                                            <?= Url::to([
+                                            'categoryId' => $category->id,
+                                            'languageId' => $language->id])?>
+                                            ">
+                                            <?= $language->name?>
+                                        </a>
+                                    </li>
+                                <? endforeach; ?>
+                            </ul>
+                        <? endif; ?>
+                    </div>
+                <? endif; ?>
                 <div class="form-group field-toolscategoryform-parent has-success">
                     <label class="control-label" for="toolscategoryform-parent"><?= Yii::t('bl.articles', 'Parent') ?></label>
                     <select id="category-parent_id" class="form-control" name="Category[parent_id]">
                         <option value="">-- <?= Yii::t('bl.articles', 'Empty') ?> --</option>
-                        <? foreach($parents as $parent): ?>
-                            <option <?= $category->parent_id === $parent->category->id ? 'selected' : '' ?>  value="<?= $parent->category->id?>"><?= $parent->name ?></option>
-                        <? endforeach; ?>
+                        <? if(!empty($categories)): ?>
+                            <? foreach($categories as $cat): ?>
+                                <option <?= $category->parent_id == $cat->id ? 'selected' : '' ?> value="<?= $cat->id?>">
+                                    <?= $cat->getTranslation($selectedLanguage->id)->name ?>
+                                </option>
+                            <? endforeach; ?>
+                        <? endif; ?>
                     </select>
                     <div class="help-block"></div>
                 </div>

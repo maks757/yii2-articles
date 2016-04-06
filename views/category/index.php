@@ -1,14 +1,13 @@
 <?php
-use bl\articles\models\CategoryTranslation;
-use bl\multilang\articles\Language;
+use bl\articles\entities\CategoryTranslation;
+use bl\multilang\entities\Language;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+
 /* @var $category CategoryTranslation */
-/* @var $baseLanguageUser Language */
 /* @var $languages Language[] */
-/* @var $baseLanguage Language */
-//Panel article
-$this->title = Yii::t('bl.articles', 'Hello');
+
+$this->title = Yii::t('bl.articles', 'Article categories');
 ?>
 
 <div class="row">
@@ -25,7 +24,9 @@ $this->title = Yii::t('bl.articles', 'Hello');
                         <tr>
                             <th><?= Yii::t('bl.articles', 'Name')?></th>
                             <th><?= Yii::t('bl.articles', 'Parent name')?></th>
-                            <th><?= Yii::t('bl.articles', 'Languages')?></th>
+                            <? if(count($languages) > 1): ?>
+                                <th class="col-lg-3"><?= Yii::t('bl.articles', 'Language') ?></th>
+                            <? endif; ?>
                             <th></th>
                         </tr>
                         </thead>
@@ -33,41 +34,30 @@ $this->title = Yii::t('bl.articles', 'Hello');
                         <? foreach($categories as $category): ?>
                             <tr>
                                 <td>
-                                    <? $name = ArrayHelper::index($category->translations, 'language_id'); ?>
-                                    <?= !empty($name[$baseLanguageUser->id]->name) ? $name[$baseLanguageUser->id]->name : $category->translations[0]->name ?>
+                                    <?= $category->translation->name ?>
                                 </td>
                                 <td>
-                                    <? $parent = ArrayHelper::index($categories, 'id')?>
-                                    <? if(!empty($parent[$category->parent_id]->translations)): ?>
-                                        <? $parentLang = ArrayHelper::index($parent[$category->parent_id]->translations, 'language_id'); ?>
-                                        <?= !empty($parentLang[$baseLanguageUser->id]->name) ? $parentLang[$baseLanguageUser->id]->name : $parent[$category->parent_id]->translations[0]->name;?>
+                                    <? if(!empty($category->parent)): ?>
+                                        <?= $category->parent->translation->name ?>
                                     <? endif; ?>
                                 </td>
                                 <td>
-                                    <? if(is_array($languages)):?>
-                                        <? $lang_category = ArrayHelper::index($category->translations, 'language_id')?>
-                                        <? foreach($languages as $language): ?>
+                                    <? if(count($languages) > 1): ?>
+                                        <? $translations = ArrayHelper::index($category->translations, 'language_id') ?>
+                                        <? foreach ($languages as $language): ?>
                                             <a href="<?= Url::to([
                                                 'save',
                                                 'categoryId' => $category->id,
                                                 'languageId' => $language->id
                                             ]) ?>"
                                                type="button"
-                                               class="btn btn-<?= $lang_category[$language->id] ? 'success' : 'danger'
-                                               ?> btn-xs"><?= $language->name?></a>
+                                               class="btn btn-<?= $translations[$language->id] ? 'success' : 'danger'
+                                               ?> btn-xs"><?= $language->name ?></a>
                                         <? endforeach; ?>
-                                    <? else: ?>
-                                        <a href="<?= Url::to([
-                                            'save',
-                                            'categoryId' => $category->id,
-                                            'languageId' => $languages->id
-                                        ]) ?>"
-                                           type="button" class="btn btn-success btn-xs">
-                                            <?= $languages->name?></a>
                                     <? endif; ?>
                                 </td>
                                 <td>
-                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id, 'languageId' => $baseLanguage->id])?>">
+                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id, 'languageId' => Language::getCurrent()->id])?>">
                                         <i class="glyphicon glyphicon-pencil text-warning"></i>
                                     </a>
                                     <br>
@@ -80,7 +70,7 @@ $this->title = Yii::t('bl.articles', 'Hello');
                         </tbody>
                     <? endif; ?>
                 </table>
-                <a href="<?= Url::to(['/articles/category/save', 'languageId' => $baseLanguage->id])?>" class="btn btn-primary pull-right">
+                <a href="<?= Url::to(['/articles/category/save', 'languageId' => Language::getCurrent()->id])?>" class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
                 </a>
             </div>

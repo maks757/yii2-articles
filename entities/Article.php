@@ -1,5 +1,6 @@
 <?php
 namespace bl\articles\entities;
+use bl\multilang\behaviors\TranslationBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -11,6 +12,16 @@ use yii\db\ActiveRecord;
  */
 class Article extends ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'translation' => [
+                'class' => TranslationBehavior::className(),
+                'translationClass' => ArticleTranslation::className(),
+                'relationColumn' => 'article_id'
+            ]
+        ];
+    }
 
     public function rules()
     {

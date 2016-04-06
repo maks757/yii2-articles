@@ -4,6 +4,7 @@
 */
 namespace bl\articles\entities;
 
+use bl\multilang\behaviors\TranslationBehavior;
 use yii\db\ActiveRecord;
 /**
  * Category model
@@ -13,6 +14,16 @@ use yii\db\ActiveRecord;
  */
 class Category extends ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'translation' => [
+                'class' => TranslationBehavior::className(),
+                'translationClass' => CategoryTranslation::className(),
+                'relationColumn' => 'category_id'
+            ]
+        ];
+    }
 
     public function rules()
     {

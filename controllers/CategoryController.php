@@ -42,43 +42,16 @@ class CategoryController extends Controller
 //        ];
 //    }
 
-    public $parent;
-    public $languages;
-    public $module;
-
-    public function actions()
-    {
-        $this->module = Yii::$app->controller->module;
-        $this->parent = CategoryTranslation::getAllCategory();
-
-        $this->languages = Language::find()->where(['show' => true]);
-        if(!$this->module->multiLanguage)
-            $this->languages = $this->languages->andWhere(['default' => true]);
-        $this->languages = $this->languages->all();
-    }
-
     public function actionIndex()
     {
-        $categories = Category::find()
-            ->with(['translations' => function($query){
-                $query = $query->addOrderBy(['name' => SORT_ASC]);
-                    if(!$this->module->multiLanguage)
-                        $query->andWhere(['language_id' => Language::getDefault()->id]);
-            }])
-            ->all();
-
         return $this->render('index', [
-            'categories' => $categories,
-            'languages' => $this->languages,
-            'baseLanguageUser' => $language = Language::find()->where(['lang_id' => Yii::$app->language])->one(),
-            'baseLanguage' => Language::getDefault()
+            'categories' => Category::find()->with(['translations'])->all(),
+            'languages' => Language::findAll(['active' => true])
         ]);
     }
 
     public function actionSave($languageId = null, $categoryId = null)
     {
-        $language = Language::findOrDefault($languageId);
-
         if (!empty($categoryId)) {
             $category = Category::findOne($categoryId);
             $category_translation = CategoryTranslation::find()->where([
@@ -91,6 +64,7 @@ class CategoryController extends Controller
             $category = new Category();
             $category_translation = new CategoryTranslation();
         }
+
         if(Yii::$app->request->isPost) {
             $category->load(Yii::$app->request->post());
             $category_translation->load(Yii::$app->request->post());
@@ -108,15 +82,13 @@ class CategoryController extends Controller
                 Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
         }
 
-        return $this->render('edit',
-            [
-                'category' =>  $category,
-                'category_translation' => $category_translation,
-                'parents' => $this->parent,
-                'languages' => $this->languages,
-                'baseLanguage' => $language,
-                'baseCategory' => $categoryId
-            ]);
+        return $this->render('edit', [
+            'category' =>  $category,
+            'category_translation' => $category_translation,
+            'categories' => Category::find()->with('translations')->all(),
+            'selectedLanguage' => Language::findOne($languageId),
+            'languages' => Language::findAll(['active' => true])
+        ]);
     }
 
     public function actionDelete($id)

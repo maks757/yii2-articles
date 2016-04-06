@@ -6,81 +6,45 @@ use bl\articles\entities\ArticleTranslation;
 use bl\multilang\entities\Language;
 use bl\articles\entities\Article;
 use bl\articles\entities\Category;
-use bl\articles\entities\CategoryTranslation;
-use bl\articles\models\ValidArticleForm;
 use Yii;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
 
 class ArticleController extends Controller
 {
 
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['index', 'save'],
-//                        'allow' => true,
-//                        'roles' => ['@'],
-//                    ],
-//                ],
-//            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'logout' => ['post'],
-//                ],
-//            ],
-//        ];
-//    }
-
-    public $languages;
-    public $parent;
-    public $baseParent;
-    public function actions()
+    /*public function behaviors()
     {
-        $this->module = Yii::$app->controller->module;
-
-        $this->languages = Language::find()->where(['show' => true]);
-        if(!$this->module->multiLanguage)
-            $this->languages = $this->languages->andWhere(['default' => true]);
-        $this->languages = $this->languages->all();
-
-        $this->baseParent = CategoryTranslation::getOneCategory(Yii::$app->request->get('articleId'));
-        $this->parent = CategoryTranslation::getAllCategory();
-    }
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'save'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'logout' => ['post'],
+                ],
+            ],
+        ];
+    }*/
 
     public function actionIndex()
     {
-        $article = Article::find()->with(['category', 'category.translations']);
-            if(!$this->module->multiLanguage)
-                $article = $article->with(['translations' => function($query){
-                    $query->andWhere(['language_id' => Language::getDefault()->id]);
-                }]);
-            $article = $article->all();
-        $userLanguage = Language::find()->where(['lang_id' => Yii::$app->language])->one();
         return $this->render('index',
             [
-                'articles' => $article,
-                'parents' => $this->parent,
-                'languages' => $this->languages,
-                'baseLanguageUser' => $userLanguage,
-                'baseLanguage' => Language::getDefault(),
-                'baseParent' => $this->baseParent,
+                'articles' => Article::find()->with(['category', 'category.translations', 'translations'])->all(),
+                'languages' => Language::findAll(['active' => true])
             ]);
     }
 
     public function actionSave($languageId = null, $articleId = null){
-
-        foreach(Category::find()->with('translations')->all() as $value){
-            $categories[] = ArrayHelper::index($value->translations, 'language_id')[Language::getDefault()->id];
-        }
 
         if (!empty($articleId)) {
             $article = Article::findOne($articleId);
@@ -115,10 +79,9 @@ class ArticleController extends Controller
             [
                 'article' => $article,
                 'article_translation' => $article_translation,
-                'categories' => $categories,
-                'baseCategory' => $articleId,
-                'languages' => $this->languages,
-                'baseLanguage' => Language::findOrDefault(Yii::$app->request->get('languageId')),
+                'categories' => Category::find()->with('translations')->all(),
+                'selectedLanguage' => Language::findOne($languageId),
+                'languages' => Language::findAll(['active' => true])
             ]);
     }
 }

@@ -1,18 +1,12 @@
 <?php
-use bl\articles\entities\CategoryTranslation;
-use bl\articles\entities\ArticleTranslation;
+use bl\articles\entities\Article;
 use bl\multilang\entities\Language;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 use yii\helpers\Url;
 
-/* @var $category CategoryTranslation */
 /* @var $languages Language[] */
-/* @var $parents CategoryTranslation[] */
-/* @var $baseLanguage Language */
-/* @var $baseParent CategoryTranslation */
-/* @var $articles ArticleTranslation[] */
-/* @var $baseLanguageUser Language */
+/* @var $articles Article[] */
 $this->title = Yii::t('bl.articles', 'Panel materials');
 ?>
 <div class="row">
@@ -30,36 +24,29 @@ $this->title = Yii::t('bl.articles', 'Panel materials');
                             <th class="col-lg-3"><?= Yii::t('bl.articles', 'Title') ?></th>
                             <th class="col-lg-3"><?= Yii::t('bl.articles', 'Category') ?></th>
                             <th class="col-lg-3"><?= Yii::t('bl.articles', 'Description') ?></th>
-                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Language') ?></th>
+                            <? if(count($languages) > 1): ?>
+                                <th class="col-lg-3"><?= Yii::t('bl.articles', 'Language') ?></th>
+                            <? endif; ?>
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
                         <? foreach ($articles as $article): ?>
                             <tr>
                                 <td>
-                                    <? $name = ArrayHelper::index($article->translations, 'language_id'); ?>
-                                    <?= !empty($name[$baseLanguageUser->id]->name) ? $name[$baseLanguageUser->id]->name : $article->translations[0]->name ?>
+                                    <?= $article->translation->name ?>
                                 </td>
                                 <td>
-                                    <?
-                                    if (!empty($article->category->translations) && !empty($article->category_id))
-                                        $parent = ArrayHelper::index($article->category->translations, 'language_id');
-                                    echo !empty($parent[$baseLanguageUser->id]->name)
-                                        ? !empty($article->category_id) ? $parent[$baseLanguageUser->id]->name : ''
-                                        : $article->category->translations[0]->name;
-                                    ?>
+                                    <? if(!empty($article->category)): ?>
+                                        <?= $article->category->translation->name ?>
+                                    <? endif; ?>
                                 </td>
                                 <td>
-                                    <? $parent = ArrayHelper::index($article->translations, 'language_id'); ?>
-                                    <?= StringHelper::truncate(
-                                        strip_tags(!empty($parent[$baseLanguageUser->id]->short_text)
-                                            ? $parent[$baseLanguageUser->id]->short_text
-                                            : $article->translations[0]->short_text)
-                                        , 50, '...') ?>
+                                    <?= StringHelper::truncate(strip_tags($article->translation->short_text), 30, '...') ?>
                                 </td>
                                 <td>
-                                    <? if(is_array($languages)): ?>
-                                        <? $lang_category = ArrayHelper::index($article->translations, 'language_id') ?>
+                                    <? if(count($languages) > 1): ?>
+                                        <? $translations = ArrayHelper::index($article->translations, 'language_id') ?>
                                         <? foreach ($languages as $language): ?>
                                             <a href="<?= Url::to([
                                                 'save',
@@ -67,25 +54,27 @@ $this->title = Yii::t('bl.articles', 'Panel materials');
                                                 'languageId' => $language->id
                                             ]) ?>"
                                                type="button"
-                                               class="btn btn-<?= $lang_category[$language->id] ? 'success' : 'danger'
+                                               class="btn btn-<?= $translations[$language->id] ? 'success' : 'danger'
                                                ?> btn-xs"><?= $language->name ?></a>
                                         <? endforeach; ?>
-                                    <? else: ?>
-                                        <a href="<?= Url::to([
-                                            'save',
-                                            'articleId' => $article->id,
-                                            'languageId' => $languages->id
-                                        ]) ?>"
-                                           type="button" class="btn btn-success btn-xs">
-                                            <?= $languages->name?></a>
                                     <? endif; ?>
+                                </td>
+                                <td>
+                                    <!-- TODO: link to current language -->
+                                    <a href="<?= Url::to([
+                                        'save',
+                                        'articleId' => $article->id,
+                                        'languageId' => $article->translation->language->id
+                                    ])?>" class="glyphicon glyphicon-edit text-warning btn btn-default btn-sm">
+                                    </a>
                                 </td>
                             </tr>
                         <? endforeach; ?>
                         </tbody>
                     <? endif; ?>
                 </table>
-                <a href="<?= Url::to(['/articles/article/save', 'languageId' => $baseLanguage->id]) ?>"
+                <!-- TODO: languageId -->
+                <a href="<?= Url::to(['/articles/article/save', 'languageId' => Language::getCurrent()->id]) ?>"
                    class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
                 </a>

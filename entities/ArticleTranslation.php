@@ -1,6 +1,7 @@
 <?php
 namespace bl\articles\entities;
 
+use bl\multilang\entities\Language;
 use Yii;
 use yii\db\ActiveRecord;
 
