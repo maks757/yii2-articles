@@ -8,6 +8,10 @@ class m160324_133902_add_roles_permissions extends Migration
     {
         $auth = \Yii::$app->authManager;
 
+        if(!\Yii::$app->authManager) {
+            return true;
+        }
+
         $createArticles = $auth->createPermission('createArticles');
         $createArticles->description = 'Create a post';
         $auth->add($createArticles);
@@ -53,15 +57,4 @@ class m160324_133902_add_roles_permissions extends Migration
 
         return true;
     }
-
-    /*
-    // Use safeUp/safeDown to run migration code within a transaction
-    public function safeUp()
-    {
-    }
-
-    public function safeDown()
-    {
-    }
-    */
 }
