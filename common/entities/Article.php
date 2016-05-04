@@ -1,5 +1,5 @@
 <?php
-namespace bl\articles\entities;
+namespace bl\articles\common\entities;
 use bl\multilang\behaviors\TranslationBehavior;
 use Yii;
 use yii\db\ActiveRecord;

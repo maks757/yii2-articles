@@ -1,7 +1,9 @@
 <?php
-namespace bl\articles\entities;
+namespace bl\articles\common\entities;
 
 use bl\multilang\entities\Language;
+use bl\seo\behaviors\SeoDataBehavior;
+use bl\seo\entities\SeoData;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -17,11 +19,22 @@ use yii\db\ActiveRecord;
  */
 class ArticleTranslation extends ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'seoData' => [
+                'class' => SeoDataBehavior::className()
+            ]
+        ];
+    }
+
     public function rules()
     {
         return [
             [['language_id', 'article_id'], 'number'],
-            [['name', 'text', 'short_text'], 'string']
+            [['name', 'text', 'short_text'], 'string'],
+            // seo data
+            [['seoUrl', 'seoTitle', 'seoDescription', 'seoKeywords'], 'string']
         ];
     }
     /**

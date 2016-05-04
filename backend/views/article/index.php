@@ -1,5 +1,5 @@
 <?php
-use bl\articles\entities\Article;
+use bl\articles\common\entities\Article;
 use bl\multilang\entities\Language;
 use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
@@ -7,25 +7,25 @@ use yii\helpers\Url;
 
 /* @var $languages Language[] */
 /* @var $articles Article[] */
-$this->title = Yii::t('bl.articles', 'Panel materials');
+$this->title = 'Articles';
 ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl.articles', 'List materials') ?>
+                <?= 'Articles list' ?>
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
                     <? if (!empty($articles)): ?>
                         <thead>
                         <tr>
-                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Title') ?></th>
-                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Category') ?></th>
-                            <th class="col-lg-3"><?= Yii::t('bl.articles', 'Description') ?></th>
+                            <th class="col-lg-3"><?= 'Title' ?></th>
+                            <th class="col-lg-3"><?= 'Category' ?></th>
+                            <th class="col-lg-3"><?= 'Description' ?></th>
                             <? if(count($languages) > 1): ?>
-                                <th class="col-lg-3"><?= Yii::t('bl.articles', 'Language') ?></th>
+                                <th class="col-lg-3"><?= 'Language' ?></th>
                             <? endif; ?>
                             <th>Actions</th>
                         </tr>
@@ -76,7 +76,7 @@ $this->title = Yii::t('bl.articles', 'Panel materials');
                 <!-- TODO: languageId -->
                 <a href="<?= Url::to(['/articles/article/save', 'languageId' => Language::getCurrent()->id]) ?>"
                    class="btn btn-primary pull-right">
-                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
+                    <i class="fa fa-user-plus"></i> <?= 'Add' ?>
                 </a>
             </div>
         </div>

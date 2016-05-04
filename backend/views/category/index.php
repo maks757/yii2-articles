@@ -1,5 +1,5 @@
 <?php
-use bl\articles\entities\CategoryTranslation;
+use bl\articles\common\entities\CategoryTranslation;
 use bl\multilang\entities\Language;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
@@ -7,7 +7,7 @@ use yii\helpers\Url;
 /* @var $category CategoryTranslation */
 /* @var $languages Language[] */
 
-$this->title = Yii::t('bl.articles', 'Article categories');
+$this->title = 'Article categories list';
 ?>
 
 <div class="row">
@@ -15,17 +15,17 @@ $this->title = Yii::t('bl.articles', 'Article categories');
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl.articles', 'List categories')?>
+                <?= 'Categories list'?>
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
                     <? if(!empty($categories)): ?>
                         <thead>
                         <tr>
-                            <th><?= Yii::t('bl.articles', 'Name')?></th>
-                            <th><?= Yii::t('bl.articles', 'Parent name')?></th>
+                            <th><?= 'Name'?></th>
+                            <th><?= 'Parent name'?></th>
                             <? if(count($languages) > 1): ?>
-                                <th class="col-lg-3"><?= Yii::t('bl.articles', 'Language') ?></th>
+                                <th class="col-lg-3"><?= 'Language' ?></th>
                             <? endif; ?>
                             <th></th>
                         </tr>
@@ -71,7 +71,7 @@ $this->title = Yii::t('bl.articles', 'Article categories');
                     <? endif; ?>
                 </table>
                 <a href="<?= Url::to(['/articles/category/save', 'languageId' => Language::getCurrent()->id])?>" class="btn btn-primary pull-right">
-                    <i class="fa fa-user-plus"></i> <?= Yii::t('bl.articles', 'Add') ?>
+                    <i class="fa fa-user-plus"></i> <?= 'Add' ?>
                 </a>
             </div>
         </div>

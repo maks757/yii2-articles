@@ -1,7 +1,7 @@
 <?php
-use bl\articles\entities\Article;
-use bl\articles\entities\ArticleTranslation;
-use bl\articles\entities\Category;
+use bl\articles\common\entities\Article;
+use bl\articles\common\entities\ArticleTranslation;
+use bl\articles\common\entities\Category;
 use bl\multilang\entities\Language;
 use dosamigos\tinymce\TinyMce;
 use yii\helpers\Url;
@@ -13,17 +13,18 @@ use yii\widgets\ActiveForm;
 /* @var $article_translation ArticleTranslation */
 /* @var $categories Category[] */
 
-$this->title = Yii::t('bl.articles', 'Panel material');
+$this->title = 'Save article';
 ?>
+
+<? $form = ActiveForm::begin(['method'=>'post']) ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= Yii::t('bl.articles', 'Article')?>
+                <?= 'Article' ?>
             </div>
             <div class="panel-body">
-                <? $form = ActiveForm::begin(['method'=>'post']) ?>
                 <? if(count($languages) > 1): ?>
                     <div class="dropdown">
                         <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -48,9 +49,9 @@ $this->title = Yii::t('bl.articles', 'Panel material');
                     </div>
                 <? endif; ?>
                 <div class="form-group field-validarticleform-category_id required has-success">
-                    <label class="control-label" for="validarticleform-category_id"><?= Yii::t('bl.articles', 'Category') ?></label>
+                    <label class="control-label" for="validarticleform-category_id"><?= 'Category' ?></label>
                     <select id="article-category_id" class="form-control" name="Article[category_id]">
-                        <option value="">-- <?= Yii::t('bl.articles', 'Empty') ?> --</option>
+                        <option value="">-- <?= 'Empty' ?> --</option>
                         <? if(!empty($categories)): ?>
                             <? foreach($categories as $category): ?>
                                 <option <?= $article->category_id == $category->id ? 'selected' : '' ?> value="<?= $category->id?>">
@@ -65,7 +66,7 @@ $this->title = Yii::t('bl.articles', 'Panel material');
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
-                ])->label(Yii::t('bl.articles', 'Name'))
+                ])->label('Name')
                 ?>
 
                 <?= $form->field($article_translation, 'short_text', [
@@ -85,7 +86,7 @@ $this->title = Yii::t('bl.articles', 'Panel material');
                         'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                     ]
                 ])
-                    ->label(Yii::t('bl.articles', 'Short description'))
+                    ->label('Short description' )
                 ?>
                 <?= $form->field($article_translation, 'text', [
                     'inputOptions' => [
@@ -103,11 +104,76 @@ $this->title = Yii::t('bl.articles', 'Panel material');
                         ],
                         'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                     ]
-                ])->label(Yii::t('bl.articles', 'Full description'))
+                ])->label('Full description')
                 ?>
-                <input type="submit" class="btn btn-primary pull-right" value="<?= Yii::t('bl.articles', 'Save') ?>">
-                <? ActiveForm::end(); ?>
+                <input type="submit" class="btn btn-primary pull-right" value="<?= 'Save' ?>">
             </div>
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="glyphicon glyphicon-list"></i>
+                <?= 'Seo Data' ?>
+            </div>
+            <div class="panel-body">
+                <?= $form->field($article_translation, 'seoUrl', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('Seo Url')
+                ?>
+
+                <?= $form->field($article_translation, 'seoTitle', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('Seo Title')
+                ?>
+
+                <?= $form->field($article_translation, 'seoDescription', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->widget(TinyMce::className(), [
+                    'options' => ['rows' => 10],
+                    'language' => 'ru',
+                    'clientOptions' => [
+                        'plugins' => [
+                            'textcolor colorpicker',
+                            "advlist autolink lists link charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table contextmenu paste"
+                        ],
+                        'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    ]
+                ])->label('Seo Description')
+                ?>
+
+                <?= $form->field($article_translation, 'seoKeywords', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->widget(TinyMce::className(), [
+                    'options' => ['rows' => 10],
+                    'language' => 'ru',
+                    'clientOptions' => [
+                        'plugins' => [
+                            'textcolor colorpicker',
+                            "advlist autolink lists link charmap print preview anchor",
+                            "searchreplace visualblocks code fullscreen",
+                            "insertdatetime media table contextmenu paste"
+                        ],
+                        'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                    ]
+                ])->label('Seo Keywords')
+                ?>
+                <input type="submit" class="btn btn-primary pull-right" value="<?= 'Save' ?>">
+            </div>
+        </div>
+    </div>
+</div>
+<? ActiveForm::end(); ?>

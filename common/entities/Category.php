@@ -2,7 +2,7 @@
 /*
  * @author Maxim Cherednyk maks757q@gmail.com
 */
-namespace bl\articles\entities;
+namespace bl\articles\common\entities;
 
 use bl\multilang\behaviors\TranslationBehavior;
 use yii\db\ActiveRecord;

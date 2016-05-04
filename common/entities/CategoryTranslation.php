@@ -2,9 +2,10 @@
 /*
  * @author Maxim Cherednyk maks757q@gmail.com
 */
-namespace bl\articles\entities;
+namespace bl\articles\common\entities;
 
 use bl\multilang\entities\Language;
+use bl\seo\behaviors\SeoDataBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
@@ -22,12 +23,22 @@ use yii\helpers\ArrayHelper;
  */
 class CategoryTranslation extends ActiveRecord
 {
+    public function behaviors()
+    {
+        return [
+            'seoData' => [
+                'class' => SeoDataBehavior::className()
+            ]
+        ];
+    }
 
     public function rules()
     {
         return [
             [['category_id', 'language_id'], 'number'],
-            [['name', 'text', 'short_text'], 'string']
+            [['name', 'text', 'short_text'], 'string'],
+            // seo data
+            [['seoUrl', 'seoTitle', 'seoDescription', 'seoKeywords'], 'string']
         ];
     }
     public function attributeLabels()

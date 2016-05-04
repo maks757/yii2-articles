@@ -3,19 +3,14 @@
 /*
  * @author Maxim Cherednyk maks757q@gmail.com
 */
-namespace bl\articles\controllers;
+namespace bl\articles\backend\controllers;
 
+use bl\articles\common\entities\Category;
+use bl\articles\common\entities\CategoryTranslation;
 use bl\multilang\entities\Language;
-use bl\articles\entities\Category;
-use bl\articles\entities\CategoryTranslation;
-use bl\articles\models\LanguageModel;
-use bl\articles\models\ValidCategoryForm;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
-use yii\filters\AccessControl;
-use yii\filters\VerbFilter;
-use yii\web\ForbiddenHttpException;
 
 class CategoryController extends Controller
 {

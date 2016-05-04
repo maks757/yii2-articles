@@ -1,11 +1,11 @@
 <?php
 
-namespace bl\articles\controllers;
+namespace bl\articles\backend\controllers;
 
-use bl\articles\entities\ArticleTranslation;
+use bl\articles\common\entities\Article;
+use bl\articles\common\entities\ArticleTranslation;
+use bl\articles\common\entities\Category;
 use bl\multilang\entities\Language;
-use bl\articles\entities\Article;
-use bl\articles\entities\Category;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
