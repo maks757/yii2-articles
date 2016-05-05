@@ -5,7 +5,9 @@ use bl\articles\common\entities\Article;
 use bl\articles\common\entities\ArticleTranslation;
 use bl\articles\common\entities\Category;
 use bl\articles\common\entities\CategoryTranslation;
+use bl\multilang\entities\Language;
 use bl\seo\entities\SeoData;
+use Yii;
 use yii\base\Object;
 use yii\web\Request;
 use yii\web\UrlManager;
@@ -21,15 +23,10 @@ class UrlRule extends Object implements UrlRuleInterface
     private $pathInfo;
     private $routes;
     private $routesCount;
+    private $currentLanguage;
 
-    public function init()
-    {
-        $request = \Yii::$app->getRequest();
-
-        $this->pathInfo = $request->getPathInfo();
-        $this->initRoutes($this->pathInfo);
-    }
-
+    private $articleRoute = 'articles/article/index';
+    private $categoryRoute = 'articles/category/index';
 
     /**
      * Parses the given request and returns the corresponding route and parameters.
@@ -39,30 +36,39 @@ class UrlRule extends Object implements UrlRuleInterface
      * If false, it means this rule cannot be used to parse this path info.
      */
     public function parseRequest($manager, $request) {
+        $this->currentLanguage = Language::getCurrent();
+        $this->pathInfo = $request->getPathInfo();
+
+        if(($this->pathInfo == $this->articleRoute || $this->pathInfo == $this->categoryRoute)) {
+            Yii::$app->response->redirect([$this->createUrl(Yii::$app->getUrlManager(), $this->pathInfo, $request->getQueryParams())], 301);
+        }
 
         if(!empty($this->prefix)) {
             if(strpos($this->pathInfo, $this->prefix) === 0) {
-                $this->initRoutes(substr($this->pathInfo, strlen($this->prefix)));
+                $this->pathInfo = substr($this->pathInfo, strlen($this->prefix));
             }
             else {
                 return false;
             }
         }
 
+
+        $this->initRoutes($this->pathInfo);
+
         $categoryId = null;
 
         for($i = 0; $i < $this->routesCount; $i++) {
             if($i === $this->routesCount - 1) {
-                if($article = $this->findArticle($this->routes[$i], $categoryId)) {
+                if($article = $this->findArticleBySeoUrl($this->routes[$i], $categoryId)) {
                     return [
                         '/articles/article/index',
                         ['id' => $article->id]
                     ];
                 }
                 else {
-                    if($category = $this->findCategory($this->routes[$i], $categoryId)) {
+                    if($category = $this->findCategoryBySeoUrl($this->routes[$i], $categoryId)) {
                         return [
-                            'categories/index',
+                            '/articles/category/index',
                             ['id' => $category->id]
                         ];
                     }
@@ -72,7 +78,7 @@ class UrlRule extends Object implements UrlRuleInterface
                 }
             }
             else {
-                if($category = $this->findCategory($this->routes[$i], $categoryId)) {
+                if($category = $this->findCategoryBySeoUrl($this->routes[$i], $categoryId)) {
                     $categoryId = $category->id;
                 }
                 else {
@@ -89,7 +95,7 @@ class UrlRule extends Object implements UrlRuleInterface
         $this->routesCount = count($this->routes);
     }
 
-    private function findArticle($seoUrl, $categoryId) {
+    private function findArticleBySeoUrl($seoUrl, $categoryId) {
         $articlesSeoData = SeoData::find()
             ->where([
                 'entity_name' => ArticleTranslation::className(),
@@ -98,18 +104,21 @@ class UrlRule extends Object implements UrlRuleInterface
 
         if($articlesSeoData) {
             foreach($articlesSeoData as $articleSeoData) {
-                return Article::find()
+                if($article = Article::find()
                     ->joinWith('translations translation')
                     ->where([
                         'translation.id' => $articleSeoData->entity_id,
-                        'category_id' => $categoryId
-                    ])->one();
+                        'category_id' => $categoryId,
+                        'translation.language_id' => $this->currentLanguage->id
+                    ])->one()) {
+                    return $article;
+                }
             }
         }
         return null;
     }
 
-    private function findCategory($seoUrl, $parentId) {
+    private function findCategoryBySeoUrl($seoUrl, $parentId) {
 
         $categoriesSeoData = SeoData::find()
             ->where([
@@ -119,12 +128,15 @@ class UrlRule extends Object implements UrlRuleInterface
 
         if($categoriesSeoData) {
             foreach($categoriesSeoData as $categorySeoData) {
-                return Category::find()
+                if($category = Category::find()
                     ->joinWith('translations translation')
                     ->where([
                         'translation.id' => $categorySeoData->entity_id,
-                        'parent_id' => $parentId
-                    ])->one();
+                        'parent_id' => $parentId,
+                        'translation.language_id' => $this->currentLanguage->id
+                    ])->one()) {
+                    return $category;
+                }
             }
         }
 
@@ -140,9 +152,46 @@ class UrlRule extends Object implements UrlRuleInterface
      */
     public function createUrl($manager, $route, $params)
     {
-        if($route == 'articles/index' || $route == 'category/index') {
+        if(($route == $this->articleRoute || $route == $this->categoryRoute) && !empty($params['id'])) {
+            $id = $params['id'];
+            $pathInfo = '';
+            $parentId = null;
 
+            if($route == $this->articleRoute) {
+                $article = Article::findOne($id);
+                if($article->translation) {
+                    $pathInfo = $article->translation->seoUrl;
+                    $parentId = $article->category_id;
+                }
+                else {
+                    return false;
+                }
+            }
+            else if($route == $this->categoryRoute) {
+                $category = Category::findOne($id);
+                if($category->translation) {
+                    $pathInfo = $category->translation->seoUrl;
+                    $parentId = $category->parent_id;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            while($parentId != null) {
+                $category = Category::findOne($parentId);
+                if($category->translation) {
+                    $pathInfo = $category->translation->seoUrl . '/' . $pathInfo;
+                    $parentId = $category->parent_id;
+                }
+                else {
+                    return false;
+                }
+            }
+
+            return $pathInfo;
         }
+
         return false;
     }
 }
