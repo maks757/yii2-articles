@@ -189,6 +189,10 @@ class UrlRule extends Object implements UrlRuleInterface
                 }
             }
 
+            if(!empty($this->prefix)) {
+                $pathInfo = $this->prefix . $pathInfo;
+            }
+
             return $pathInfo;
         }
 
