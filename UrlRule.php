@@ -9,6 +9,7 @@ use bl\multilang\entities\Language;
 use bl\seo\entities\SeoData;
 use Yii;
 use yii\base\Object;
+use yii\web\NotFoundHttpException;
 use yii\web\Request;
 use yii\web\UrlManager;
 use yii\web\UrlRuleInterface;
@@ -32,15 +33,16 @@ class UrlRule extends Object implements UrlRuleInterface
      * Parses the given request and returns the corresponding route and parameters.
      * @param UrlManager $manager the URL manager
      * @param Request $request the request component
-     * @return array|boolean the parsing result. The route and the parameters are returned as an array.
+     * @return array|bool the parsing result. The route and the parameters are returned as an array.
      * If false, it means this rule cannot be used to parse this path info.
+     * @throws NotFoundHttpException
      */
     public function parseRequest($manager, $request) {
         $this->currentLanguage = Language::getCurrent();
         $this->pathInfo = $request->getPathInfo();
 
         if(($this->pathInfo == $this->articleRoute || $this->pathInfo == $this->categoryRoute)) {
-            Yii::$app->response->redirect([$this->createUrl(Yii::$app->getUrlManager(), $this->pathInfo, $request->getQueryParams())], 301);
+            throw new NotFoundHttpException();
         }
 
         if(!empty($this->prefix)) {
@@ -159,7 +161,7 @@ class UrlRule extends Object implements UrlRuleInterface
 
             if($route == $this->articleRoute) {
                 $article = Article::findOne($id);
-                if($article->translation) {
+                if($article->translation && $article->translation->seoUrl) {
                     $pathInfo = $article->translation->seoUrl;
                     $parentId = $article->category_id;
                 }
@@ -169,7 +171,7 @@ class UrlRule extends Object implements UrlRuleInterface
             }
             else if($route == $this->categoryRoute) {
                 $category = Category::findOne($id);
-                if($category->translation) {
+                if($category->translation && $category->translation->seoUrl) {
                     $pathInfo = $category->translation->seoUrl;
                     $parentId = $category->parent_id;
                 }
@@ -180,7 +182,7 @@ class UrlRule extends Object implements UrlRuleInterface
 
             while($parentId != null) {
                 $category = Category::findOne($parentId);
-                if($category->translation) {
+                if($category->translation && $category->translation->seoUrl) {
                     $pathInfo = $category->translation->seoUrl . '/' . $pathInfo;
                     $parentId = $category->parent_id;
                 }
