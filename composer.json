@@ -19,7 +19,7 @@
     "yiisoft/yii2-bootstrap": "*",
     "2amigos/yii2-tinymce-widget": "*",
 
-    "black-lamp/yii2-multi-lang": "1.1.3",
+    "black-lamp/yii2-multi-lang": "1.1.4",
     "black-lamp/yii2-seo": "0.1"
   },
   "autoload": {
