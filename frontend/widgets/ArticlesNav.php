@@ -20,7 +20,7 @@ class ArticlesNav extends Menu
         $categories = Category::findAll(['parent_id' => null]);
         $articles = Article::findAll(['category_id' => null]);
 
-        $this->items = array_merge($this->handleCategories($categories), $this->handleArticles($articles));
+        $this->items = array_merge($this->items, $this->handleCategories($categories), $this->handleArticles($articles));
 
         parent::init();
     }
