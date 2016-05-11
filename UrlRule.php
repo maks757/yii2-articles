@@ -158,11 +158,14 @@ class UrlRule extends Object implements UrlRuleInterface
             $id = $params['id'];
             $pathInfo = '';
             $parentId = null;
+            $language = Language::findOne([
+                'lang_id' => $manager->language
+            ]);
 
             if($route == $this->articleRoute) {
                 $article = Article::findOne($id);
-                if($article->translation && $article->translation->seoUrl) {
-                    $pathInfo = $article->translation->seoUrl;
+                if($article->getTranslation($language->id) && $article->getTranslation($language->id)->seoUrl) {
+                    $pathInfo = $article->getTranslation($language->id)->seoUrl;
                     $parentId = $article->category_id;
                 }
                 else {
@@ -171,8 +174,8 @@ class UrlRule extends Object implements UrlRuleInterface
             }
             else if($route == $this->categoryRoute) {
                 $category = Category::findOne($id);
-                if($category->translation && $category->translation->seoUrl) {
-                    $pathInfo = $category->translation->seoUrl;
+                if($category->getTranslation($language->id) && $category->getTranslation($language->id)->seoUrl) {
+                    $pathInfo = $category->getTranslation($language->id)->seoUrl;
                     $parentId = $category->parent_id;
                 }
                 else {
@@ -182,8 +185,8 @@ class UrlRule extends Object implements UrlRuleInterface
 
             while($parentId != null) {
                 $category = Category::findOne($parentId);
-                if($category->translation && $category->translation->seoUrl) {
-                    $pathInfo = $category->translation->seoUrl . '/' . $pathInfo;
+                if($category->getTranslation($language->id) && $category->getTranslation($language->id)->seoUrl) {
+                    $pathInfo = $category->getTranslation($language->id)->seoUrl . '/' . $pathInfo;
                     $parentId = $category->parent_id;
                 }
                 else {
