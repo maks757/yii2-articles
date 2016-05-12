@@ -36,6 +36,7 @@ $this->title = 'Category';
                                     <li>
                                         <a href="
                                             <?= Url::to([
+                                            'save',
                                             'categoryId' => $category->id,
                                             'languageId' => $language->id])?>
                                             ">

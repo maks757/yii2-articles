@@ -37,6 +37,7 @@ $this->title = 'Save article';
                                     <li>
                                         <a href="
                                             <?= Url::to([
+                                            'save',
                                             'articleId' => $article->id,
                                             'languageId' => $language->id])?>
                                             ">
