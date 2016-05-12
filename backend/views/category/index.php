@@ -51,7 +51,7 @@ $this->title = 'Article categories list';
                                                 'languageId' => $language->id
                                             ]) ?>"
                                                type="button"
-                                               class="btn btn-<?= $translations[$language->id] ? 'success' : 'danger'
+                                               class="btn btn-<?= !empty($translations[$language->id]) ? 'primary' : 'danger'
                                                ?> btn-xs"><?= $language->name ?></a>
                                         <? endforeach; ?>
                                     <? endif; ?>
