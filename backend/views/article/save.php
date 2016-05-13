@@ -82,7 +82,8 @@ $this->title = 'Save article';
                             'textcolor colorpicker',
                             "advlist autolink lists link charmap print preview anchor",
                             "searchreplace visualblocks code fullscreen",
-                            "insertdatetime media table contextmenu paste"
+                            "insertdatetime media table contextmenu paste",
+                            'image'
                         ],
                         'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                     ]
@@ -101,7 +102,8 @@ $this->title = 'Save article';
                             'textcolor colorpicker',
                             "advlist autolink lists link charmap print preview anchor",
                             "searchreplace visualblocks code fullscreen",
-                            "insertdatetime media table contextmenu paste"
+                            "insertdatetime media table contextmenu paste",
+                            'image'
                         ],
                         'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
                     ]
