@@ -10,11 +10,17 @@ use yii\web\Controller;
 class CategoryController extends Controller
 {
     public function actionIndex($id) {
+        /* @var Category $category */
         $category = Category::findOne($id);
 
         $categoryTranslation = $category->translation;
 
-        $this->view->title = $categoryTranslation->seoTitle;
+        if(!empty($categoryTranslation->seoTitle)) {
+            $this->view->title = $categoryTranslation->seoTitle;
+        }
+        else {
+            $this->view->title = $categoryTranslation->name;
+        }
         $this->view->registerMetaTag([
             'name' => 'description',
             'content' => html_entity_decode($categoryTranslation->seoDescription)
