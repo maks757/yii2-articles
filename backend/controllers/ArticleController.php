@@ -15,11 +15,10 @@ class ArticleController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index',
-            [
-                'articles' => Article::find()->with(['category', 'category.translations', 'translations'])->all(),
-                'languages' => Language::findAll(['active' => true])
-            ]);
+        return $this->render('index', [
+            'articles' => Article::find()->with(['category', 'category.translations', 'translations'])->all(),
+            'languages' => Language::findAll(['active' => true])
+        ]);
     }
 
     public function actionSave($languageId = null, $articleId = null){
@@ -53,13 +52,12 @@ class ArticleController extends Controller
                 Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
         }
 
-        return $this->render('save',
-            [
-                'article' => $article,
-                'article_translation' => $article_translation,
-                'categories' => Category::find()->with('translations')->all(),
-                'selectedLanguage' => Language::findOne($languageId),
-                'languages' => Language::findAll(['active' => true])
-            ]);
+        return $this->render('save', [
+            'article' => $article,
+            'article_translation' => $article_translation,
+            'categories' => Category::find()->with('translations')->all(),
+            'selectedLanguage' => Language::findOne($languageId),
+            'languages' => Language::findAll(['active' => true])
+        ]);
     }
 }
