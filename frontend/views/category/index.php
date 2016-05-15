@@ -9,5 +9,5 @@ use bl\articles\common\entities\Category;
 
 ?>
 
-<h1><?= $category->getTranslation()->name ?></h1>
-<p><?= $category->getTranslation()->text ?></p>
+<h1><?= $category->translation->name ?></h1>
+<p><?= $category->translation->text ?></p>
