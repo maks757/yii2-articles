@@ -29,7 +29,7 @@ class ArticleController extends Controller
             'content' => html_entity_decode($articleTranslation->seoKeywords)
         ]);
 
-        return $this->render('index', [
+        return $this->render(!empty($article->view) ? $article->view : 'index', [
             'article' => $article
         ]);
     }
