@@ -13,12 +13,20 @@ use yii\widgets\Menu;
  */
 class ArticlesNav extends Menu
 {
+    /**
+     * @var string
+     */
     public $activeItemTemplate = '<span>{label}</span>';
+
+    /**
+     * @var integer
+     */
+    public $categoryId = null;
 
     public function init()
     {
-        $categories = Category::findAll(['parent_id' => null]);
-        $articles = Article::findAll(['category_id' => null]);
+        $categories = Category::findAll(['parent_id' => $this->categoryId]);
+        $articles = Article::findAll(['category_id' => $this->categoryId]);
 
         $this->items = array_merge($this->items, $this->handleCategories($categories), $this->handleArticles($articles));
 
