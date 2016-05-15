@@ -179,4 +179,25 @@ $this->title = 'Save article';
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="glyphicon glyphicon-list"></i>
+                <?= 'Tech' ?>
+            </div>
+            <div class="panel-body">
+                <?= $form->field($article, 'view', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('View Name')
+                ?>
+                <input type="submit" class="btn btn-primary pull-right" value="<?= 'Save' ?>">
+            </div>
+        </div>
+    </div>
+</div>
+
 <? ActiveForm::end(); ?>
