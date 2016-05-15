@@ -9,6 +9,9 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $category_id
+ * @property Category $category
+ * @property ArticleTranslation[] translations
+ * @property ArticleTranslation translation
  */
 class Article extends ActiveRecord
 {
