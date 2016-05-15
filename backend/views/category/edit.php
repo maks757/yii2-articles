@@ -176,4 +176,31 @@ $this->title = 'Category';
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <i class="glyphicon glyphicon-list"></i>
+                <?= 'Tech' ?>
+            </div>
+            <div class="panel-body">
+                <?= $addForm->field($category, 'show', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->checkbox()
+                ?>
+                <?= $addForm->field($category, 'show_articles', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->checkbox()
+                ?>
+                <input type="submit" class="btn btn-primary pull-right" value="<?= 'Save' ?>">
+            </div>
+        </div>
+    </div>
+</div>
+
 <? ActiveForm::end(); ?>

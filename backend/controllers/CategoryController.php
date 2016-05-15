@@ -15,28 +15,6 @@ use yii\web\Controller;
 class CategoryController extends Controller
 {
 
-//    public function behaviors()
-//    {
-//        return [
-//            'access' => [
-//                'class' => AccessControl::className(),
-//                'rules' => [
-//                    [
-//                        'actions' => ['index', 'save', 'delete'],
-//                        'allow' => true,
-//                        'roles' => ['editArticles'],
-//                    ],
-//                ],
-//            ],
-//            'verbs' => [
-//                'class' => VerbFilter::className(),
-//                'actions' => [
-//                    'logout' => ['post'],
-//                ],
-//            ],
-//        ];
-//    }
-
     public function actionIndex()
     {
         return $this->render('index', [
@@ -91,5 +69,15 @@ class CategoryController extends Controller
         $model = Category::find()->where(['id' => $id])->one();
         if($model->delete())
             return $this->redirect(\Yii::$app->request->referrer);
+    }
+
+    public function actionSwitchShow($id) {
+        /* @var Category $article */
+        if($article = Category::findOne($id)) {
+            $article->show = !$article->show;
+            $article->save();
+        }
+
+        return $this->redirect(Url::to(['/articles/category']));
     }
 }

@@ -16,7 +16,10 @@ class ArticleController extends Controller
     public function actionIndex()
     {
         return $this->render('index', [
-            'articles' => Article::find()->with(['category', 'category.translations', 'translations'])->all(),
+            'articles' => Article::find()
+                ->with(['category', 'category.translations', 'translations'])
+                ->orderBy(['position' => SORT_ASC])
+                ->all(),
             'languages' => Language::findAll(['active' => true])
         ]);
     }
@@ -59,5 +62,36 @@ class ArticleController extends Controller
             'selectedLanguage' => Language::findOne($languageId),
             'languages' => Language::findAll(['active' => true])
         ]);
+    }
+
+    public function actionRemove($id) {
+        Article::deleteAll(['id' => $id]);
+        return $this->redirect(Url::to(['/articles/article']));
+    }
+
+    public function actionUp($id) {
+        if($article = Article::findOne($id)) {
+            $article->movePrev();
+        }
+
+        return $this->redirect(Url::to(['/articles/article']));
+    }
+
+    public function actionDown($id) {
+        if($article = Article::findOne($id)) {
+            $article->moveNext();
+        }
+
+        return $this->redirect(Url::to(['/articles/article']));
+    }
+
+    public function actionSwitchShow($id) {
+        /* @var Article $article */
+        if($article = Article::findOne($id)) {
+            $article->show = !$article->show;
+            $article->save();
+        }
+
+        return $this->redirect(Url::to(['/articles/article']));
     }
 }

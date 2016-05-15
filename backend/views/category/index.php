@@ -22,12 +22,14 @@ $this->title = 'Article categories list';
                     <? if(!empty($categories)): ?>
                         <thead>
                         <tr>
-                            <th><?= 'Name'?></th>
-                            <th><?= 'Parent name'?></th>
+                            <th class="col-md-3"><?= 'Name'?></th>
+                            <th class="col-md-2"><?= 'Parent name'?></th>
                             <? if(count($languages) > 1): ?>
                                 <th class="col-lg-3"><?= 'Language' ?></th>
                             <? endif; ?>
-                            <th></th>
+                            <th class="text-center">Show</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -56,13 +58,30 @@ $this->title = 'Article categories list';
                                         <? endforeach; ?>
                                     <? endif; ?>
                                 </td>
+
+                                <td class="text-center">
+                                    <a href="<?= Url::to([
+                                        'switch-show',
+                                        'id' => $category->id
+                                    ]) ?>">
+                                        <? if ($category->show): ?>
+                                            <i class="glyphicon glyphicon-ok text-primary"></i>
+                                        <? else: ?>
+                                            <i class="glyphicon glyphicon-minus text-danger"></i>
+                                        <? endif; ?>
+                                    </a>
+                                </td>
+
                                 <td>
-                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id, 'languageId' => Language::getCurrent()->id])?>">
-                                        <i class="glyphicon glyphicon-pencil text-warning"></i>
+                                    <a href="<?= Url::to(['save', 'categoryId' => $category->id, 'languageId' => Language::getCurrent()->id])?>"
+                                        class="glyphicon glyphicon-edit text-warning btn btn-default btn-sm">
                                     </a>
                                     <br>
-                                    <a href="<?= Url::to(['delete', 'id' => $category->id])?>">
-                                        <i class="glyphicon glyphicon-remove text-danger"></i>
+                                </td>
+
+                                <td>
+                                    <a href="<?= Url::to(['delete', 'id' => $category->id])?>"
+                                        class="glyphicon glyphicon-remove text-danger btn btn-default btn-sm">
                                     </a>
                                 </td>
                             </tr>

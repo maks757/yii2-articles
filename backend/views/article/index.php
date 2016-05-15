@@ -21,18 +21,34 @@ $this->title = 'Articles';
                     <? if (!empty($articles)): ?>
                         <thead>
                         <tr>
+                            <th class="col-lg-1"><?= 'Position' ?></th>
                             <th class="col-lg-3"><?= 'Title' ?></th>
                             <th class="col-lg-3"><?= 'Category' ?></th>
                             <th class="col-lg-3"><?= 'Description' ?></th>
                             <? if(count($languages) > 1): ?>
                                 <th class="col-lg-3"><?= 'Language' ?></th>
                             <? endif; ?>
-                            <th>Actions</th>
+                            <th>Show</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
                         <? foreach ($articles as $article): ?>
                             <tr>
+                                <td class="text-center">
+                                    <?= $article->position ?>
+                                    <a href="<?= Url::to([
+                                        'up',
+                                        'id' => $article->id
+                                    ]) ?>" class="glyphicon glyphicon-arrow-up text-primary pull-left">
+                                    </a>
+                                    <a href="<?= Url::to([
+                                        'down',
+                                        'id' => $article->id
+                                    ]) ?>" class="glyphicon glyphicon-arrow-down text-primary pull-left">
+                                    </a>
+                                </td>
                                 <td>
                                     <?= $article->translation->name ?>
                                 </td>
@@ -59,13 +75,34 @@ $this->title = 'Articles';
                                         <? endforeach; ?>
                                     <? endif; ?>
                                 </td>
+
+                                <td class="text-center">
+                                    <a href="<?= Url::to([
+                                        'switch-show',
+                                        'id' => $article->id
+                                    ]) ?>">
+                                        <? if ($article->show): ?>
+                                            <i class="glyphicon glyphicon-ok text-primary"></i>
+                                        <? else: ?>
+                                            <i class="glyphicon glyphicon-minus text-danger"></i>
+                                        <? endif; ?>
+                                    </a>
+                                </td>
+
                                 <td>
-                                    <!-- TODO: link to current language -->
                                     <a href="<?= Url::to([
                                         'save',
                                         'articleId' => $article->id,
                                         'languageId' => $article->translation->language->id
                                     ])?>" class="glyphicon glyphicon-edit text-warning btn btn-default btn-sm">
+                                    </a>
+                                </td>
+
+                                <td>
+                                    <a href="<?= Url::to([
+                                        'remove',
+                                        'id' => $article->id
+                                    ])?>" class="glyphicon glyphicon-remove text-danger btn btn-default btn-sm">
                                     </a>
                                 </td>
                             </tr>
