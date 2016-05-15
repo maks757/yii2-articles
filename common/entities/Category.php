@@ -11,8 +11,11 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $parent_id
- * @property CategoryTranslation[] translations
- * @property CategoryTranslation translation
+ * @property boolean $show
+ * @property boolean $show_articles
+ *
+ * @property CategoryTranslation[] $translations
+ * @property CategoryTranslation $translation
  */
 class Category extends ActiveRecord
 {
@@ -30,7 +33,8 @@ class Category extends ActiveRecord
     public function rules()
     {
         return [
-            ['parent_id', 'number']
+            ['parent_id', 'number'],
+            [['show', 'show_articles'], 'boolean']
         ];
     }
     /**

@@ -1,6 +1,8 @@
 <?php
 namespace bl\articles\common\entities;
+
 use bl\multilang\behaviors\TranslationBehavior;
+use yii2tech\ar\position\PositionBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 
@@ -9,11 +11,13 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $category_id
+ * @property boolean $show
+ * @property integer $position
  * @property string $view
  *
  * @property Category $category
- * @property ArticleTranslation[] translations
- * @property ArticleTranslation translation
+ * @property ArticleTranslation[] $translations
+ * @property ArticleTranslation $translation
  */
 class Article extends ActiveRecord
 {
@@ -24,7 +28,11 @@ class Article extends ActiveRecord
                 'class' => TranslationBehavior::className(),
                 'translationClass' => ArticleTranslation::className(),
                 'relationColumn' => 'article_id'
-            ]
+            ],
+            'positionBehavior' => [
+                'class' => PositionBehavior::className(),
+                'positionAttribute' => 'position',
+            ],
         ];
     }
 
