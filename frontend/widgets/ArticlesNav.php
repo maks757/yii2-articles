@@ -25,8 +25,18 @@ class ArticlesNav extends Menu
 
     public function init()
     {
-        $categories = Category::findAll(['parent_id' => $this->categoryId]);
-        $articles = Article::findAll(['category_id' => $this->categoryId]);
+        $categories = Category::findAll([
+            'parent_id' => $this->categoryId,
+            'show' => true
+        ]);
+
+        $articles = Article::find()
+            ->where([
+                'category_id' => $this->categoryId,
+                'show' => true
+            ])
+            ->orderBy(['position' => SORT_ASC])
+            ->all();
 
         $this->items = array_merge($this->items, $this->handleCategories($categories), $this->handleArticles($articles));
 
