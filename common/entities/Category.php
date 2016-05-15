@@ -11,6 +11,8 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $parent_id
+ * @property CategoryTranslation[] translations
+ * @property CategoryTranslation translation
  */
 class Category extends ActiveRecord
 {
