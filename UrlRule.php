@@ -61,14 +61,14 @@ class UrlRule extends Object implements UrlRuleInterface
 
         for($i = 0; $i < $this->routesCount; $i++) {
             if($i === $this->routesCount - 1) {
-                if($article = $this->findArticleBySeoUrl($this->routes[$i], $categoryId)) {
+                if($article = $this->findArticleBySeoUrl($this->routes[$i], $categoryId, ['show' => true])) {
                     return [
                         '/articles/article/index',
                         ['id' => $article->id]
                     ];
                 }
                 else {
-                    if($category = $this->findCategoryBySeoUrl($this->routes[$i], $categoryId)) {
+                    if($category = $this->findCategoryBySeoUrl($this->routes[$i], $categoryId, ['show' => true])) {
                         return [
                             '/articles/category/index',
                             ['id' => $category->id]
@@ -80,7 +80,7 @@ class UrlRule extends Object implements UrlRuleInterface
                 }
             }
             else {
-                if($category = $this->findCategoryBySeoUrl($this->routes[$i], $categoryId)) {
+                if($category = $this->findCategoryBySeoUrl($this->routes[$i], $categoryId, ['show_articles' => true])) {
                     $categoryId = $category->id;
                 }
                 else {
@@ -97,7 +97,7 @@ class UrlRule extends Object implements UrlRuleInterface
         $this->routesCount = count($this->routes);
     }
 
-    private function findArticleBySeoUrl($seoUrl, $categoryId) {
+    private function findArticleBySeoUrl($seoUrl, $categoryId, $options = []) {
         $articlesSeoData = SeoData::find()
             ->where([
                 'entity_name' => ArticleTranslation::className(),
@@ -108,11 +108,11 @@ class UrlRule extends Object implements UrlRuleInterface
             foreach($articlesSeoData as $articleSeoData) {
                 if($article = Article::find()
                     ->joinWith('translations translation')
-                    ->where([
+                    ->where(array_merge([
                         'translation.id' => $articleSeoData->entity_id,
                         'category_id' => $categoryId,
                         'translation.language_id' => $this->currentLanguage->id
-                    ])->one()) {
+                    ], $options))->one()) {
                     return $article;
                 }
             }
@@ -120,7 +120,7 @@ class UrlRule extends Object implements UrlRuleInterface
         return null;
     }
 
-    private function findCategoryBySeoUrl($seoUrl, $parentId) {
+    private function findCategoryBySeoUrl($seoUrl, $parentId, $options = []) {
 
         $categoriesSeoData = SeoData::find()
             ->where([
@@ -132,11 +132,11 @@ class UrlRule extends Object implements UrlRuleInterface
             foreach($categoriesSeoData as $categorySeoData) {
                 if($category = Category::find()
                     ->joinWith('translations translation')
-                    ->where([
+                    ->where(array_merge([
                         'translation.id' => $categorySeoData->entity_id,
                         'parent_id' => $parentId,
                         'translation.language_id' => $this->currentLanguage->id
-                    ])->one()) {
+                    ], $options))->one()) {
                     return $category;
                 }
             }
