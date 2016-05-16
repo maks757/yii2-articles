@@ -48,3 +48,6 @@ INSTALLATION
 		]
 	]
 ```
+
+### Use
+	yoursite.com/articles/article
