@@ -13,3 +13,17 @@ INSTALLATION
 ```javascript
 "black-lamp/yii2-articles": "0.*"
 ```
+
+
+### Configure seo-url rule
+```php
+'urlManager' => [
+	...
+	'rules' => [
+		...
+		[
+			'class' => 'bl\articles\UrlRule'
+		]
+	]
+]
+```
