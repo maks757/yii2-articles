@@ -2,7 +2,7 @@
 
 use yii\db\Migration;
 
-class m160219_090802_create_articles extends Migration
+class m160219_090803_create_articles extends Migration
 {
     public function up()
     {
