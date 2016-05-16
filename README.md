@@ -50,4 +50,4 @@ INSTALLATION
 ```
 
 ### Use
-	yoursite.com/articles/article
+	yourbackend.url/articles/article
