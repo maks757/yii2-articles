@@ -78,6 +78,8 @@ $this->title = 'Save article';
                     'options' => ['rows' => 10],
                     'language' => 'ru',
                     'clientOptions' => [
+                        'relative_urls' => false,
+                        'remove_script_host' => false,
                         'plugins' => [
                             'textcolor colorpicker',
                             "advlist autolink lists link charmap print preview anchor",
@@ -98,6 +100,8 @@ $this->title = 'Save article';
                     'options' => ['rows' => 20],
                     'language' => 'ru',
                     'clientOptions' => [
+                        'relative_urls' => false,
+//                        'remove_script_host' => false,
                         'plugins' => [
                             'textcolor colorpicker',
                             "advlist autolink lists link charmap print preview anchor",
