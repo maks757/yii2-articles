@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Category';
 ?>
 
-<? $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $category->id, 'languageId' => $selectedLanguage->id]), 'method'=>'post']) ?>
+<?php $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $category->id, 'languageId' => $selectedLanguage->id]), 'method'=>'post']) ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -24,15 +24,15 @@ $this->title = 'Category';
                 <?= 'Category'?>
             </div>
             <div class="panel-body">
-                <? if(count($languages) > 1): ?>
+                <?php if(count($languages) > 1): ?>
                     <div class="dropdown">
                         <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <?= $selectedLanguage->name ?>
                             <span class="caret"></span>
                         </button>
-                        <? if(count($languages) > 1): ?>
+                        <?php if(count($languages) > 1): ?>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <? foreach($languages as $language): ?>
+                                <?php foreach($languages as $language): ?>
                                     <li>
                                         <a href="
                                             <?= Url::to([
@@ -43,22 +43,22 @@ $this->title = 'Category';
                                             <?= $language->name?>
                                         </a>
                                     </li>
-                                <? endforeach; ?>
+                                <?php endforeach; ?>
                             </ul>
-                        <? endif; ?>
+                        <?php endif; ?>
                     </div>
-                <? endif; ?>
+                <?php endif; ?>
                 <div class="form-group field-toolscategoryform-parent has-success">
                     <label class="control-label" for="toolscategoryform-parent"><?= 'Parent' ?></label>
                     <select id="category-parent_id" class="form-control" name="Category[parent_id]">
                         <option value="">-- <?= 'Empty' ?> --</option>
-                        <? if(!empty($categories)): ?>
-                            <? foreach($categories as $cat): ?>
+                        <?php if(!empty($categories)): ?>
+                            <?php foreach($categories as $cat): ?>
                                 <option <?= $category->parent_id == $cat->id ? 'selected' : '' ?> value="<?= $cat->id?>">
                                     <?= $cat->getTranslation($selectedLanguage->id)->name ?>
                                 </option>
-                            <? endforeach; ?>
-                        <? endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                     <div class="help-block"></div>
                 </div>
@@ -207,4 +207,4 @@ $this->title = 'Category';
     </div>
 </div>
 
-<? ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>

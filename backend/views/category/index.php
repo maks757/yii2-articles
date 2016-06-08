@@ -19,34 +19,34 @@ $this->title = 'Article categories list';
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
-                    <? if(!empty($categories)): ?>
+                    <?php if(!empty($categories)): ?>
                         <thead>
                         <tr>
                             <th class="col-md-3"><?= 'Name'?></th>
                             <th class="col-md-2"><?= 'Parent name'?></th>
-                            <? if(count($languages) > 1): ?>
+                            <?php if(count($languages) > 1): ?>
                                 <th class="col-lg-3"><?= 'Language' ?></th>
-                            <? endif; ?>
+                            <?php endif; ?>
                             <th class="text-center">Show</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <? foreach($categories as $category): ?>
+                        <?php foreach($categories as $category): ?>
                             <tr>
                                 <td>
                                     <?= $category->translation->name ?>
                                 </td>
                                 <td>
-                                    <? if(!empty($category->parent)): ?>
+                                    <?php if(!empty($category->parent)): ?>
                                         <?= $category->parent->translation->name ?>
-                                    <? endif; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
-                                    <? if(count($languages) > 1): ?>
-                                        <? $translations = ArrayHelper::index($category->translations, 'language_id') ?>
-                                        <? foreach ($languages as $language): ?>
+                                    <?php if(count($languages) > 1): ?>
+                                        <?php $translations = ArrayHelper::index($category->translations, 'language_id') ?>
+                                        <?php foreach ($languages as $language): ?>
                                             <a href="<?= Url::to([
                                                 'save',
                                                 'categoryId' => $category->id,
@@ -55,8 +55,8 @@ $this->title = 'Article categories list';
                                                type="button"
                                                class="btn btn-<?= !empty($translations[$language->id]) ? 'primary' : 'danger'
                                                ?> btn-xs"><?= $language->name ?></a>
-                                        <? endforeach; ?>
-                                    <? endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </td>
 
                                 <td class="text-center">
@@ -64,11 +64,11 @@ $this->title = 'Article categories list';
                                         'switch-show',
                                         'id' => $category->id
                                     ]) ?>">
-                                        <? if ($category->show): ?>
+                                        <?php if ($category->show): ?>
                                             <i class="glyphicon glyphicon-ok text-primary"></i>
-                                        <? else: ?>
+                                        <?php else: ?>
                                             <i class="glyphicon glyphicon-minus text-danger"></i>
-                                        <? endif; ?>
+                                        <?php endif; ?>
                                     </a>
                                 </td>
 
@@ -85,9 +85,9 @@ $this->title = 'Article categories list';
                                     </a>
                                 </td>
                             </tr>
-                        <? endforeach; ?>
+                        <?php endforeach; ?>
                         </tbody>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </table>
                 <a href="<?= Url::to(['/articles/category/save', 'languageId' => Language::getCurrent()->id])?>" class="btn btn-primary pull-right">
                     <i class="fa fa-user-plus"></i> <?= 'Add' ?>

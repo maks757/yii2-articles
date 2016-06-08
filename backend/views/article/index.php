@@ -18,23 +18,23 @@ $this->title = 'Articles';
             </div>
             <div class="panel-body">
                 <table class="table table-hover">
-                    <? if (!empty($articles)): ?>
+                    <?php if (!empty($articles)): ?>
                         <thead>
                         <tr>
                             <th class="col-lg-1"><?= 'Position' ?></th>
                             <th class="col-lg-3"><?= 'Title' ?></th>
                             <th class="col-lg-3"><?= 'Category' ?></th>
                             <th class="col-lg-3"><?= 'Description' ?></th>
-                            <? if(count($languages) > 1): ?>
+                            <?php if(count($languages) > 1): ?>
                                 <th class="col-lg-3"><?= 'Language' ?></th>
-                            <? endif; ?>
+                            <?php endif; ?>
                             <th>Show</th>
                             <th>Edit</th>
                             <th>Delete</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <? foreach ($articles as $article): ?>
+                        <?php foreach ($articles as $article): ?>
                             <tr>
                                 <td class="text-center">
                                     <?= $article->position ?>
@@ -53,17 +53,17 @@ $this->title = 'Articles';
                                     <?= $article->translation->name ?>
                                 </td>
                                 <td>
-                                    <? if(!empty($article->category)): ?>
+                                    <?php if(!empty($article->category)): ?>
                                         <?= $article->category->translation->name ?>
-                                    <? endif; ?>
+                                    <?php endif; ?>
                                 </td>
                                 <td>
                                     <?= StringHelper::truncate(strip_tags($article->translation->short_text), 30, '...') ?>
                                 </td>
                                 <td>
-                                    <? if(count($languages) > 1): ?>
-                                        <? $translations = ArrayHelper::index($article->translations, 'language_id') ?>
-                                        <? foreach ($languages as $language): ?>
+                                    <?php if(count($languages) > 1): ?>
+                                        <?php $translations = ArrayHelper::index($article->translations, 'language_id') ?>
+                                        <?php foreach ($languages as $language): ?>
                                             <a href="<?= Url::to([
                                                 'save',
                                                 'articleId' => $article->id,
@@ -72,8 +72,8 @@ $this->title = 'Articles';
                                                type="button"
                                                class="btn btn-<?= !empty($translations[$language->id]) ? 'primary' : 'danger'
                                                ?> btn-xs"><?= $language->name ?></a>
-                                        <? endforeach; ?>
-                                    <? endif; ?>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </td>
 
                                 <td class="text-center">
@@ -81,11 +81,11 @@ $this->title = 'Articles';
                                         'switch-show',
                                         'id' => $article->id
                                     ]) ?>">
-                                        <? if ($article->show): ?>
+                                        <?php if ($article->show): ?>
                                             <i class="glyphicon glyphicon-ok text-primary"></i>
-                                        <? else: ?>
+                                        <?php else: ?>
                                             <i class="glyphicon glyphicon-minus text-danger"></i>
-                                        <? endif; ?>
+                                        <?php endif; ?>
                                     </a>
                                 </td>
 
@@ -106,9 +106,9 @@ $this->title = 'Articles';
                                     </a>
                                 </td>
                             </tr>
-                        <? endforeach; ?>
+                        <?php endforeach; ?>
                         </tbody>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </table>
                 <!-- TODO: languageId -->
                 <a href="<?= Url::to(['/articles/article/save', 'languageId' => Language::getCurrent()->id]) ?>"

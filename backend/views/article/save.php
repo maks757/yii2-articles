@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Save article';
 ?>
 
-<? $form = ActiveForm::begin(['method'=>'post']) ?>
+<?php $form = ActiveForm::begin(['method'=>'post']) ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -25,15 +25,15 @@ $this->title = 'Save article';
                 <?= 'Article' ?>
             </div>
             <div class="panel-body">
-                <? if(count($languages) > 1): ?>
+                <?php if(count($languages) > 1): ?>
                     <div class="dropdown">
                         <button class="btn btn-warning btn-xs dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                             <?= $selectedLanguage->name ?>
                             <span class="caret"></span>
                         </button>
-                        <? if(count($languages) > 1): ?>
+                        <?php if(count($languages) > 1): ?>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <? foreach($languages as $language): ?>
+                                <?php foreach($languages as $language): ?>
                                     <li>
                                         <a href="
                                             <?= Url::to([
@@ -44,22 +44,22 @@ $this->title = 'Save article';
                                             <?= $language->name?>
                                         </a>
                                     </li>
-                                <? endforeach; ?>
+                                <?php endforeach; ?>
                             </ul>
-                        <? endif; ?>
+                        <?php endif; ?>
                     </div>
-                <? endif; ?>
+                <?php endif; ?>
                 <div class="form-group field-validarticleform-category_id required has-success">
                     <label class="control-label" for="validarticleform-category_id"><?= 'Category' ?></label>
                     <select id="article-category_id" class="form-control" name="Article[category_id]">
                         <option value="">-- <?= 'Empty' ?> --</option>
-                        <? if(!empty($categories)): ?>
-                            <? foreach($categories as $category): ?>
+                        <?php if(!empty($categories)): ?>
+                            <?php foreach($categories as $category): ?>
                                 <option <?= $article->category_id == $category->id ? 'selected' : '' ?> value="<?= $category->id?>">
                                     <?= $category->getTranslation($selectedLanguage->id)->name ?>
                                 </option>
-                            <? endforeach; ?>
-                        <? endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                     <div class="help-block"></div>
                 </div>
@@ -204,4 +204,4 @@ $this->title = 'Save article';
     </div>
 </div>
 
-<? ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
