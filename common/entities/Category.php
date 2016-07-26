@@ -7,6 +7,8 @@ use yii\db\ActiveRecord;
 /**
  * Category model
  *
+ * @author Gutsulyak Vadim <guts.vadim@gmail.com>
+ *
  * @property integer $id
  * @property integer $parent_id
  * @property boolean $show

@@ -7,7 +7,9 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * Article
+ * Article entity class
+ *
+ * @author Gutsulyak Vadim <guts.vadim@gmail.com>
  *
  * @property integer $id
  * @property integer $category_id

@@ -9,6 +9,8 @@ use yii\db\ActiveRecord;
 /**
  * ArticleTranslation
  *
+ * @author Gutsulyak Vadim <guts.vadim@gmail.com>
+ *
  * @property integer $id
  * @property integer $article_id
  * @property integer $language_id

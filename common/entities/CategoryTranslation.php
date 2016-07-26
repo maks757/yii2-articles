@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
 /**
  * CategoryTranslation model
  *
+ * @author Gutsulyak Vadim <guts.vadim@gmail.com>
+ *
  * @property integer $id
  * @property integer $category_id
  * @property integer $language_id
