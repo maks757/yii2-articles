@@ -30,7 +30,7 @@ class CategoryController extends Controller
             'content' => html_entity_decode($categoryTranslation->seoKeywords)
         ]);
 
-        return $this->render('index', [
+        return $this->render(!empty($category->view) ? $category->view : 'index', [
             'category' => $category
         ]);
     }
