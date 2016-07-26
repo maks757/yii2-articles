@@ -19,7 +19,7 @@ class ArticlesNav extends Menu
     public $activeItemTemplate = '<span>{label}</span>';
 
     /**
-     * @var integer
+     * @var integer Parent category to start
      */
     public $categoryId = null;
 
