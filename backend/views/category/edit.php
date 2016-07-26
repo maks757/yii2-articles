@@ -173,6 +173,12 @@ $this->title = 'Category';
                     ]
                 ])->label('Articles view name')
                 ?>
+                <?= $addForm->field($category, 'key', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('Key')
+                ?>
 
                 <?= $addForm->field($category, 'show', [
                     'inputOptions' => [

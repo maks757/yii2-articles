@@ -10,6 +10,7 @@ use yii\db\ActiveRecord;
  * @author Gutsulyak Vadim <guts.vadim@gmail.com>
  *
  * @property integer $id
+ * @property string $key
  * @property integer $parent_id
  * @property boolean $show
  * @property boolean $show_articles
@@ -37,7 +38,8 @@ class Category extends ActiveRecord
         return [
             ['parent_id', 'number'],
             [['show', 'show_articles'], 'boolean'],
-            [['view', 'article_view'], 'string']
+            [['view', 'article_view'], 'string'],
+            ['key', 'unique']
         ];
     }
     /**
