@@ -161,6 +161,19 @@ $this->title = 'Category';
                 <?= 'Tech' ?>
             </div>
             <div class="panel-body">
+                <?= $addForm->field($category, 'view', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('View name')
+                ?>
+                <?= $addForm->field($category, 'article_view', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('Articles view name')
+                ?>
+
                 <?= $addForm->field($category, 'show', [
                     'inputOptions' => [
                         'class' => 'form-control'
