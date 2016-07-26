@@ -3,7 +3,6 @@ namespace bl\articles\common\entities;
 
 use bl\multilang\entities\Language;
 use bl\seo\behaviors\SeoDataBehavior;
-use bl\seo\entities\SeoData;
 use Yii;
 use yii\db\ActiveRecord;
 

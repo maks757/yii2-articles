@@ -1,7 +1,4 @@
 <?php
-/*
- * @author Maxim Cherednyk maks757q@gmail.com
-*/
 namespace bl\articles\common\entities;
 
 use bl\multilang\entities\Language;
@@ -9,7 +6,6 @@ use bl\seo\behaviors\SeoDataBehavior;
 use Yii;
 use yii\db\ActiveRecord;
 use yii\helpers\ArrayHelper;
-
 
 /**
  * CategoryTranslation model
