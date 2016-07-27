@@ -19,26 +19,40 @@ class ArticlesNav extends Menu
     public $activeItemTemplate = '<span>{label}</span>';
 
     /**
+     * @var string
+     */
+    public $renderArticles = true;
+
+    /**
+     * @var string
+     */
+    public $renderCategories = true;
+
+    /**
      * @var integer Parent category to start
      */
     public $categoryId = null;
 
     public function init()
     {
-        $categories = Category::findAll([
-            'parent_id' => $this->categoryId,
-            'show' => true
-        ]);
-
-        $articles = Article::find()
-            ->where([
-                'category_id' => $this->categoryId,
+        if($this->renderCategories) {
+            $categories = Category::findAll([
+                'parent_id' => $this->categoryId,
                 'show' => true
-            ])
-            ->orderBy(['position' => SORT_ASC])
-            ->all();
+            ]);
+            $this->items = array_merge($this->items, $this->handleCategories($categories));
+        }
 
-        $this->items = array_merge($this->items, $this->handleCategories($categories), $this->handleArticles($articles));
+        if($this->renderArticles) {
+            $articles = Article::find()
+                ->where([
+                    'category_id' => $this->categoryId,
+                    'show' => true
+                ])
+                ->orderBy(['position' => SORT_ASC])
+                ->all();
+            $this->items = array_merge($this->items, $this->handleArticles($articles));
+        }
 
         parent::init();
     }
@@ -59,21 +73,31 @@ class ArticlesNav extends Menu
         $items = [];
         if(!empty($categories)) {
             foreach ($categories as $category) {
-                $item = [
-                    'label' => $category->translation->name,
-                    'url' => [
-                        '/articles/category/index',
-                        'id' => $category->id
-                    ]
-                ];
+                if($this->renderCategories) {
 
-                $childItems = array_merge($this->handleCategories($category->children), $this->handleArticles($category->articles));
+                    $item = [
+                        'label' => $category->translation->name,
+                        'url' => [
+                            '/articles/category/index',
+                            'id' => $category->id
+                        ]
+                    ];
 
-                if(!empty($childItems)) {
-                    $item['items'] = $childItems;
+                    $childItems = $this->handleCategories($category->children);
+
+                    if($this->renderArticles) {
+                        $childItems = array_merge($childItems, $this->handleArticles($category->articles));
+                    }
+
+                    if (!empty($childItems)) {
+                        $item['items'] = $childItems;
+                    }
+
+                    $items[] = $item;
                 }
-
-                $items[] = $item;
+                else {
+                    return array_merge($this->handleCategories($category->children), $this->handleArticles($category->articles));
+                }
             }
         }
         return $items;
