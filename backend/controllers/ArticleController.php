@@ -214,9 +214,18 @@ class ArticleController extends Controller
 
             $article = Article::findOne($id);
 
-            unlink($dir . '/articles/' . $type . '/' . $article->$type . '-big.jpg');
-            unlink($dir . '/articles/' . $type . '/' . $article->$type . '-small.jpg');
-            unlink($dir . '/articles/' . $type . '/' . $article->$type . '-thumb.jpg');
+            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-big.jpg')) {
+                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-big.jpg');
+            }
+            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-small.jpg')) {
+                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-small.jpg');
+            }
+            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-thumb.jpg')) {
+                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-thumb.jpg');
+            }
+            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-origin.jpg')) {
+                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-origin.jpg');
+            }
             $article->$type = null;
             $article->save();
         }
