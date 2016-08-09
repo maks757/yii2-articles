@@ -2,13 +2,16 @@
 
 namespace bl\articles\backend\controllers;
 
+use bl\articles\backend\components\form\ArticleImageForm;
 use bl\articles\common\entities\Article;
 use bl\articles\common\entities\ArticleTranslation;
 use bl\articles\common\entities\Category;
+use bl\imagable\Imagable;
 use bl\multilang\entities\Language;
 use Yii;
 use yii\helpers\Url;
 use yii\web\Controller;
+use yii\web\UploadedFile;
 
 class ArticleController extends Controller
 {
@@ -202,6 +205,22 @@ class ArticleController extends Controller
         }
         return false;
 
+    }
+
+    public function actionDeleteImage($id, $type) {
+        $dir = Yii::getAlias('@frontend/web/images');
+
+        if (!empty($id) && !empty($type)) {
+
+            $article = Article::findOne($id);
+
+            unlink($dir . '/articles/' . $type . '/' . $article->$type . '-big.jpg');
+            unlink($dir . '/articles/' . $type . '/' . $article->$type . '-small.jpg');
+            unlink($dir . '/articles/' . $type . '/' . $article->$type . '-thumb.jpg');
+            $article->$type = null;
+            $article->save();
+        }
+        return $this->redirect(Yii::$app->request->referrer);
     }
 
     public function actionRemove($id)
