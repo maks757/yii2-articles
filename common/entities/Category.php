@@ -17,6 +17,10 @@ use yii\db\ActiveRecord;
  * @property string $view
  * @property string $article_view
  *
+ * @property Article[] $articles
+ * @property Article[] $allArticles
+ * @property Category[] $children
+ *
  * @property CategoryTranslation[] $translations
  * @property CategoryTranslation $translation
  */
@@ -56,6 +60,22 @@ class Category extends ActiveRecord
     public function getArticles()
     {
         return $this->hasMany(Article::className(), ['category_id' => 'id']);
+    }
+
+    public function getAllArticles($category = null) {
+        if($category == null) {
+            $category = $this;
+        }
+
+        $articles = $category->articles;
+
+        if(!empty($category->children)) {
+            foreach($category->children as $child) {
+                $articles = array_merge($articles, $child->getAllArticles());
+            }
+        }
+
+        return $articles;
     }
 
     /**

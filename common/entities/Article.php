@@ -13,9 +13,12 @@ use yii\db\ActiveRecord;
  *
  * @property integer $id
  * @property integer $category_id
+ * @property integer $author_id
  * @property boolean $show
  * @property integer $position
  * @property string $view
+ * @property integer $created_at
+ * @property integer $updated_at
  *
  * @property Category $category
  * @property ArticleTranslation[] $translations
