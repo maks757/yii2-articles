@@ -22,14 +22,21 @@ $this->title = 'Save article';
 
 TabsAsset::register($this);
 ?>
-<?=Html::a('Общие', Url::to(['add-basic',  'articleId' => $article->id, 'languageId' => $languageId]), ['class' => 'image']);?>
-<?=Html::a('Изображения', Url::to(['add-images',  'articleId' => $article->id, 'languageId' => $languageId]), ['class' => 'image']);?>
+
+<ul class="tabs">
+    <li>
+        <?=Html::a(Yii::t('articles', 'Basic'), Url::to(['add-basic',  'articleId' => $article->id, 'languageId' => $languageId]), ['class' => 'image']);?>
+    </li>
+    <li>
+        <?=Html::a(Yii::t('articles', 'Images'), Url::to(['add-images',  'articleId' => $article->id, 'languageId' => $languageId]), ['class' => 'image']);?>
+    </li>
+</ul>
 
 
 <? Pjax::begin([
     'linkSelector' => '.image',
     'enablePushState' => true,
-    'timeout' => 5000
+    'timeout' => 10000
 ]);
 ?>
 

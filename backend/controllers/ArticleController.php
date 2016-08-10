@@ -113,17 +113,13 @@ class ArticleController extends Controller
             return $this->renderPartial('add-basic',
                 [
                     'article' => $article,
-                    'languageId' => $languageId,
-                    'viewName' => 'add-basic',
-                    'params' => [
-                        'article' => $article,
-                        'article_translation' => $article_translation,
-                        'categories' => Category::find()->with('translations')->all(),
-                        'selectedLanguage' => Language::findOne($languageId),
-                        'languages' => Language::findAll(['active' => true]),
-                    ]
+                    'article_translation' => $article_translation,
+                    'categories' => Category::find()->with('translations')->all(),
+                    'selectedLanguage' => Language::findOne($languageId),
+                    'languages' => Language::findAll(['active' => true])
                 ]);
-        } else {
+        }
+        else {
             return $this->render('save',
                 [
                     'article' => $article,
@@ -136,7 +132,8 @@ class ArticleController extends Controller
                         'selectedLanguage' => Language::findOne($languageId),
                         'languages' => Language::findAll(['active' => true]),
                     ]
-                ]);
+                ]
+            );
         }
     }
 
@@ -180,19 +177,15 @@ class ArticleController extends Controller
 
             if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
                 strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
-            ) {
-
-                return $this->renderPartial('save', [
+            )
+            {
+                return $this->renderPartial('add-images', [
                     'article' => $article,
-                    'languageId' => $languageId,
-                    'viewName' => 'add-images',
-                    'params' => [
-                        'article' => $article,
-                        'image_form' => $image_form,
-                        'languageId' => $languageId
-                    ]
+                    'image_form' => $image_form,
+                    'languageId' => $languageId
                 ]);
-            } else return $this->render('save', [
+            }
+            else return $this->render('save', [
                 'article' => $article,
                 'languageId' => $languageId,
                 'viewName' => 'add-images',
@@ -207,7 +200,8 @@ class ArticleController extends Controller
 
     }
 
-    public function actionDeleteImage($id, $type) {
+    public function actionDeleteImage($id, $type)
+    {
         $dir = Yii::getAlias('@frontend/web/images');
 
         if (!empty($id) && !empty($type)) {
