@@ -22,7 +22,7 @@ $this->title = 'Save article';
         <div class="panel panel-default">
             <div class="panel-heading">
                 <i class="glyphicon glyphicon-list"></i>
-                <?= 'Article' ?>
+                <?= Yii::t('articles', 'Basic') ?>
             </div>
             <div class="panel-body">
                 <?php if(count($languages) > 1): ?>

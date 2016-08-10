@@ -16,35 +16,33 @@ use yii\widgets\Pjax;
 
 ?>
 
-<? Pjax::begin([
-    'linkSelector' => '.image',
-    'enablePushState' => true,
-    'timeout' => 5000
-]);
-?>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <i class="glyphicon glyphicon-picture"></i>
+        <?= \Yii::t('articles', 'Images'); ?>
+    </div>
 
-<h2><?= \Yii::t('shop', 'Images'); ?></h2>
 <? $addForm = ActiveForm::begin(['method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]) ?>
 <table class="table-bordered table-condensed table-stripped table-hover">
     <thead class="thead-inverse">
     <tr>
         <th class="text-center col-md-1">
-            <?= \Yii::t('shop', 'Type'); ?>
+            <?= \Yii::t('articles', 'Type'); ?>
         </th>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <th class="text-center col-md-2">
-                <?= \Yii::t('shop', 'Image preview'); ?>
+                <?= \Yii::t('articles', 'Image preview'); ?>
             </th>
             <th class="text-center col-md-5">
-                <?= \Yii::t('shop', 'Image URL'); ?>
+                <?= \Yii::t('articles', 'Image URL'); ?>
             </th>
         <?php endif; ?>
         <th class="text-center col-md-3">
-            <?= \Yii::t('shop', 'Upload'); ?>
+            <?= \Yii::t('articles', 'Upload'); ?>
         </th>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <th class="text-center col-md-1">
-                <?= \Yii::t('shop', 'Delete'); ?>
+                <?= \Yii::t('articles', 'Delete'); ?>
             </th>
         <?php endif; ?>
     </tr>
@@ -52,7 +50,7 @@ use yii\widgets\Pjax;
     <tbody>
     <tr>
         <td class="text-center">
-            <?= \Yii::t('shop', 'Menu item'); ?>
+            <?= \Yii::t('articles', 'Menu item'); ?>
         </td>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <td>
@@ -75,7 +73,7 @@ use yii\widgets\Pjax;
             </td>
         <?php endif; ?>
         <td>
-            <?= $addForm->field($image_form, 'menu_item')->fileInput()->label(\Yii::t('shop', 'Upload image')); ?>
+            <?= $addForm->field($image_form, 'menu_item')->fileInput()->label(\Yii::t('articles', 'Upload image')); ?>
         </td>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <td class="text-center">
@@ -88,7 +86,7 @@ use yii\widgets\Pjax;
     </tr>
     <tr>
         <td class="text-center">
-            <?= \Yii::t('shop', 'Thumbnail'); ?>
+            <?= \Yii::t('articles', 'Thumbnail'); ?>
         </td>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <td>
@@ -111,7 +109,7 @@ use yii\widgets\Pjax;
             </td>
         <?php endif; ?>
         <td>
-            <?= $addForm->field($image_form, 'thumbnail')->fileInput()->label(\Yii::t('shop', 'Upload image')); ?>
+            <?= $addForm->field($image_form, 'thumbnail')->fileInput()->label(\Yii::t('articles', 'Upload image')); ?>
         </td>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <td class="text-center">
@@ -124,7 +122,7 @@ use yii\widgets\Pjax;
     </tr>
     <tr>
         <td class="text-center">
-            <?= \Yii::t('shop', 'For social networks'); ?>
+            <?= \Yii::t('articles', 'For social networks'); ?>
         </td>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <td>
@@ -147,7 +145,7 @@ use yii\widgets\Pjax;
             </td>
         <?php endif; ?>
         <td>
-            <?= $addForm->field($image_form, 'social')->fileInput()->label(\Yii::t('shop', 'Upload image')); ?>
+            <?= $addForm->field($image_form, 'social')->fileInput()->label(\Yii::t('articles', 'Upload image')); ?>
         </td>
         <?php if (!empty($article->menu_item) || !empty($article->thumbnail) || !empty($article->social)) : ?>
             <td class="text-center">
@@ -161,7 +159,6 @@ use yii\widgets\Pjax;
     </tbody>
 </table>
 
-<?= Html::submitButton(\Yii::t('shop', 'Add'), ['class' => 'btn btn-primary']) ?>
+<?= Html::submitButton(\Yii::t('articles', 'Add'), ['class' => 'btn btn-primary']) ?>
 
 <? ActiveForm::end(); ?>
-<? Pjax::end(); ?>
