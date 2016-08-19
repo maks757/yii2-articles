@@ -63,6 +63,7 @@ class Category extends ActiveRecord
     }
 
     public function getAllArticles($category = null) {
+
         if($category == null) {
             $category = $this;
         }
@@ -74,6 +75,14 @@ class Category extends ActiveRecord
                 $articles = array_merge($articles, $child->getAllArticles());
             }
         }
+
+        usort($articles, function($a, $b) {
+            if(strtotime($a->created_at) > strtotime($b->created_at))
+                return 1;
+            else
+                return -1;
+            return 0;
+        });
 
         return $articles;
     }
