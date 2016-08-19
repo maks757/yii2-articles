@@ -52,3 +52,5 @@ INSTALLATION
 
 ### Use
 	yourbackend.url/articles/article
+	
+	**YOU MUST CONFIGURE IMAGABLE COMPONENT**
