@@ -2,6 +2,8 @@
 namespace bl\articles\common\entities;
 
 use bl\multilang\behaviors\TranslationBehavior;
+use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use yii2tech\ar\position\PositionBehavior;
 use Yii;
 use yii\db\ActiveRecord;
@@ -38,6 +40,12 @@ class Article extends ActiveRecord
                 'class' => PositionBehavior::className(),
                 'positionAttribute' => 'position',
             ],
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => 'updated_at',
+                'value' => new Expression('NOW()')
+            ]
         ];
     }
 
