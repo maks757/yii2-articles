@@ -19,6 +19,7 @@ use yii\db\ActiveRecord;
  * @property boolean $show
  * @property integer $position
  * @property string $view
+ * @property string $color
  * @property integer $created_at
  * @property integer $updated_at
  *
@@ -53,7 +54,7 @@ class Article extends ActiveRecord
     {
         return [
             ['category_id', 'number'],
-            ['view', 'string']
+            [['view', 'color'], 'string']
         ];
     }
 
