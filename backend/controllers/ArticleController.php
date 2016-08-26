@@ -146,7 +146,7 @@ class ArticleController extends Controller
             $image_form = new ArticleImageForm();
 
             if (Yii::$app->request->isPost) {
-
+                // TODO: rename article categories
                 $image_form->social = UploadedFile::getInstance($image_form, 'social');
                 $image_form->thumbnail = UploadedFile::getInstance($image_form, 'thumbnail');
                 $image_form->menu_item = UploadedFile::getInstance($image_form, 'menu_item');
@@ -162,7 +162,6 @@ class ArticleController extends Controller
                         $article->thumbnail = $image_name['thumbnail'];
                     }
                     if (!empty($image_form->menu_item)) {
-
                         $article->menu_item = $image_name['menu_item'];
                     }
                 }
@@ -175,9 +174,7 @@ class ArticleController extends Controller
 
             }
 
-            if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-                strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
-            )
+            if (Yii::$app->request->isPjax)
             {
                 return $this->renderPartial('add-images', [
                     'article' => $article,
