@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
 $this->title = 'Category';
 ?>
 
-<?php $addForm = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $category->id, 'languageId' => $selectedLanguage->id]), 'method'=>'post']) ?>
+<?php $form = ActiveForm::begin(['action' => Url::to(['/articles/category/save', 'categoryId' => $category->id, 'languageId' => $selectedLanguage->id]), 'method'=>'post']) ?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -62,13 +62,22 @@ $this->title = 'Category';
                     </select>
                     <div class="help-block"></div>
                 </div>
-                <?= $addForm->field($category_translation, 'name', [
+                <?= $form->field($category_translation, 'name', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->label('Name')
                 ?>
-                <?= $addForm->field($category_translation, 'short_text', [
+
+                <?= $form->field($category, 'color', [
+                    'inputOptions' => [
+                        'class' => 'form-control',
+                        'type' => 'color'
+                    ]
+                ])->label('Color')
+                ?>
+
+                <?= $form->field($category_translation, 'short_text', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
@@ -87,7 +96,7 @@ $this->title = 'Category';
                     ]
                 ])->label('Short description')
                 ?>
-                <?= $addForm->field($category_translation, 'text', [
+                <?= $form->field($category_translation, 'text', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
@@ -120,28 +129,28 @@ $this->title = 'Category';
                 <?= 'Seo Data'?>
             </div>
             <div class="panel-body">
-                <?= $addForm->field($category_translation, 'seoUrl', [
+                <?= $form->field($category_translation, 'seoUrl', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->label('Seo Url')
                 ?>
 
-                <?= $addForm->field($category_translation, 'seoTitle', [
+                <?= $form->field($category_translation, 'seoTitle', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->label('Seo Title')
                 ?>
 
-                <?= $addForm->field($category_translation, 'seoDescription', [
+                <?= $form->field($category_translation, 'seoDescription', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->textarea(['rows' => 3])->label('Seo Description')
                 ?>
 
-                <?= $addForm->field($category_translation, 'seoKeywords', [
+                <?= $form->field($category_translation, 'seoKeywords', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
@@ -161,32 +170,32 @@ $this->title = 'Category';
                 <?= 'Tech' ?>
             </div>
             <div class="panel-body">
-                <?= $addForm->field($category, 'view', [
+                <?= $form->field($category, 'view', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->label('View name')
                 ?>
-                <?= $addForm->field($category, 'article_view', [
+                <?= $form->field($category, 'article_view', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->label('Articles view name')
                 ?>
-                <?= $addForm->field($category, 'key', [
+                <?= $form->field($category, 'key', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->label('Key')
                 ?>
 
-                <?= $addForm->field($category, 'show', [
+                <?= $form->field($category, 'show', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]
                 ])->checkbox()
                 ?>
-                <?= $addForm->field($category, 'show_articles', [
+                <?= $form->field($category, 'show_articles', [
                     'inputOptions' => [
                         'class' => 'form-control'
                     ]

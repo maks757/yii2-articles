@@ -70,6 +70,14 @@ $this->title = 'Save article';
                 ])->label('Name')
                 ?>
 
+                <?= $form->field($article, 'color', [
+                    'inputOptions' => [
+                        'class' => 'form-control',
+                        'type' => 'color'
+                    ]
+                ])->label('Color')
+                ?>
+
                 <?= $form->field($article_translation, 'short_text', [
                     'inputOptions' => [
                         'class' => 'form-control'
