@@ -32,7 +32,7 @@ class ArticleImageForm extends Model
         if ($this->validate()) {
             $dir = Yii::getAlias('@frontend/web/images/articles');
 
-            $imagable = \Yii::$app->imagable;
+            $imagable = \Yii::$app->articles_imagable;
             $imagable->imagesPath = Yii::getAlias('@frontend/web/images/articles');
             $image_name = [];
 
