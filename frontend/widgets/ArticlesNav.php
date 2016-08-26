@@ -4,6 +4,7 @@ namespace bl\articles\frontend\widgets;
 use bl\articles\common\entities\Article;
 use bl\articles\common\entities\Category;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Menu;
@@ -16,7 +17,9 @@ class ArticlesNav extends Menu
     /**
      * @var string
      */
-    public $activeItemTemplate = '<span>{label}</span>';
+    public $activeItemTemplate = '<a style="background-color: {color}">{label}</a>';
+
+    public $linkTemplate = '<a href="{url}" style="background-color: {color}">{label}</a>';
 
     /**
      * @var string
@@ -60,12 +63,17 @@ class ArticlesNav extends Menu
     protected function renderItem($item)
     {
         if($this->isItemActive($item)) {
-            return strtr($this->activeItemTemplate, [
-                '{url}' => Html::encode(Url::to($item['url'])),
-                '{label}' => $item['label'],
-            ]);
+            $template = $this->activeItemTemplate;
         }
-        return parent::renderItem($item);
+        else {
+            $template = ArrayHelper::getValue($item, 'template', $this->linkTemplate);
+        }
+
+        return strtr($template, [
+            '{url}' => Html::encode(Url::to($item['url'])),
+            '{label}' => $item['label'],
+            '{color}' => $item['color']
+        ]);
     }
 
 
@@ -80,7 +88,8 @@ class ArticlesNav extends Menu
                         'url' => [
                             '/articles/category/index',
                             'id' => $category->id
-                        ]
+                        ],
+                        'color' => $category->color
                     ];
 
                     $childItems = $this->handleCategories($category->children);
@@ -111,7 +120,8 @@ class ArticlesNav extends Menu
                     'label' => $article->translation->name,
                     'url' => [
                         '/articles/article/index',
-                        'id' => $article->id
+                        'id' => $article->id,
+                        'color' => $article->color
                     ]
                 ];
 
