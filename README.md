@@ -52,7 +52,7 @@ INSTALLATION
 
 ### Configure Imagable module
 ```
-'imagable' => [
+'articles_imagable' => [
             'class' => 'bl\imagable\Imagable',
             'imageClass' => \backend\components\imagable\CreateImageImagine::className(),
             'nameClass' => 'backend\components\imagable\CRC32Name',
