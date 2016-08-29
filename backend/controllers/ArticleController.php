@@ -199,24 +199,22 @@ class ArticleController extends Controller
 
     public function actionDeleteImage($id, $type)
     {
-        $dir = Yii::getAlias('@frontend/web/images');
-
         if (!empty($id) && !empty($type)) {
 
             $article = Article::findOne($id);
+            if (file_exists($article->getImagePath($id, $type, 'big'))) {
+                unlink($article->getImagePath($id, $type, 'big'));
+            }
+            if (file_exists($article->getImagePath($id, $type, 'small'))) {
+                unlink($article->getImagePath($id, $type, 'small'));
+            }
+            if (file_exists($article->getImagePath($id, $type, 'thumb'))) {
+                unlink($article->getImagePath($id, $type, 'thumb'));
+            }
+            if (file_exists($article->getImagePath($id, $type, 'origin'))) {
+                unlink($article->getImagePath($id, $type, 'origin'));
+            }
 
-            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-big.jpg')) {
-                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-big.jpg');
-            }
-            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-small.jpg')) {
-                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-small.jpg');
-            }
-            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-thumb.jpg')) {
-                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-thumb.jpg');
-            }
-            if (file_exists($dir . '/articles/' . $type . '/' . $article->$type . '-origin.jpg')) {
-                unlink($dir . '/articles/' . $type . '/' . $article->$type . '-origin.jpg');
-            }
             $article->$type = null;
             $article->save();
         }

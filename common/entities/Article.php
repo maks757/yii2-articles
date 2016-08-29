@@ -81,4 +81,13 @@ class Article extends ActiveRecord
     {
         return $this->hasMany(ArticleTranslation::className(), ['article_id' => 'id']);
     }
+
+    public function getImagePath($id, $type, $category) {
+        $dir = Yii::getAlias('@frontend/web/images/articles/');
+        $article = Article::findOne($id);
+
+        $imagePath = $dir . $type . '/' . $article->$type . '-' . $category . '.jpg';
+
+        return $imagePath;
+    }
 }
