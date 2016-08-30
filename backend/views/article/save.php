@@ -33,7 +33,7 @@ TabsAsset::register($this);
 </ul>
 
 
-<? Pjax::begin([
+<?php Pjax::begin([
     'linkSelector' => '.image',
     'enablePushState' => true,
     'timeout' => 10000
