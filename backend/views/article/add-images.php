@@ -22,7 +22,7 @@ use yii\widgets\Pjax;
         <?= \Yii::t('articles', 'Images'); ?>
     </div>
 
-<? $form = ActiveForm::begin(['method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]) ?>
+<?php $form = ActiveForm::begin(['method' => 'post', 'options' => ['enctype' => 'multipart/form-data']]) ?>
     <table class="table-bordered table-condensed table-stripped table-hover">
         <thead class="thead-inverse">
         <tr>
@@ -161,4 +161,4 @@ use yii\widgets\Pjax;
 
 <?= Html::submitButton(\Yii::t('articles', 'Add'), ['class' => 'btn btn-primary']) ?>
 
-<? ActiveForm::end(); ?>
+<?php ActiveForm::end(); ?>
