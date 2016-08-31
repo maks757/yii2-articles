@@ -78,7 +78,7 @@ class Category extends ActiveRecord
         }
 
         usort($articles, function($a, $b) {
-            if(strtotime($a->created_at) > strtotime($b->created_at))
+            if(strtotime($a->created_at) < strtotime($b->created_at))
                 return 1;
             else
                 return -1;
