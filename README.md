@@ -45,18 +45,20 @@ INSTALLATION
 		'rules' => [
 			...
 			[
-				'class' => 'bl\articles\UrlRule'
+			    'class' => 'bl\articles\UrlRule'
 			]
 		]
 	]
 ```
 
 ### Configure Imagable module
-```
-'articles_imagable' => [
-            'class' => 'bl\imagable\Imagable',
-            'imageClass' => \backend\components\imagable\CreateImageImagine::className(),
-            'nameClass' => 'backend\components\imagable\CRC32Name',
+```php
+    'components' => [
+        ...
+        'articles_imagable' => [
+            'class' => bl\imagable\Imagable::className(),
+            'imageClass' => CreateImageImagine::className(),
+            'nameClass' => bl\imagable\name\CRC32Name::className(),
             'imagesPath' => '@frontend/web/images',
             'categories' => [
                 'origin' => false,
@@ -114,6 +116,8 @@ INSTALLATION
                     ],
                 ]
             ]
+        ],
+    ]
 ```
 
 ### Use
