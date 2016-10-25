@@ -11,9 +11,10 @@ INSTALLATION
 
 ### Migrate
 
-	yii migrate --migrationPath=@vendor/black-lamp/yii2-multi-lang/migration
-	yii migrate --migrationPath=@vendor/black-lamp/yii2-articles/common/migrations
-	yii migrate --migrationPath=@vendor/black-lamp/yii2-seo/migrations
+    php yii migrate --migrationPath=@yii/rbac/migrations
+	php yii migrate --migrationPath=@vendor/black-lamp/yii2-multi-lang/migration
+	php yii migrate --migrationPath=@vendor/black-lamp/yii2-articles/common/migrations
+	php yii migrate --migrationPath=@vendor/black-lamp/yii2-seo/migrations
 
 ### Add articles module to your backend config
 ```php
