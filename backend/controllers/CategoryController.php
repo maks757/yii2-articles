@@ -27,17 +27,17 @@ class CategoryController extends Controller
                 'rules' => [
                     [
                         'actions' => ['index'],
-                        'roles' => ['viewCategoryList'],
+                        'roles' => ['viewArticleCategoryList'],
                         'allow' => true,
                     ],
                     [
                         'actions' => ['save', 'switch-show'],
-                        'roles' => ['editCategories'],
+                        'roles' => ['editArticleCategories'],
                         'allow' => true,
                     ],
                     [
                         'actions' => ['delete'],
-                        'roles' => ['deleteCategories'],
+                        'roles' => ['deleteArticleCategories'],
                         'allow' => true,
                     ],
                 ],
