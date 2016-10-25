@@ -33,7 +33,7 @@ class ArticleController extends Controller
                     ],
                     [
                         'actions' => ['save', 'add-basic',
-                            'add-iamges', 'delete-image',
+                            'add-images', 'delete-image',
                             'up', 'down', 'switch-show'],
                         'roles' => ['editArticles'],
                         'allow' => true,
