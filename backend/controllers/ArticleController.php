@@ -9,12 +9,45 @@ use bl\articles\common\entities\Category;
 use bl\imagable\Imagable;
 use bl\multilang\entities\Language;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 use yii\web\UploadedFile;
 
 class ArticleController extends Controller
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'roles' => ['viewArticleList'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['save', 'add-basic',
+                            'add-iamges', 'delete-image',
+                            'up', 'down', 'switch-show'],
+                        'roles' => ['editArticles'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['remove'],
+                        'roles' => ['deleteArticles'],
+                        'allow' => true,
+                    ],
+                ],
+            ]
+        ];
+    }
+
 
     public function actionIndex()
     {
@@ -102,14 +135,11 @@ class ArticleController extends Controller
                 $article_translation->language_id = $languageId;
                 $article_translation->save();
                 Yii::$app->getSession()->setFlash('success', 'Data were successfully modified.');
-//                return $this->redirect(Url::toRoute('/articles/article'));
             } else
                 Yii::$app->getSession()->setFlash('danger', 'Failed to change the record.');
         }
 
-        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
-            strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest'
-        ) {
+        if (\Yii::$app->request->isPjax) {
             return $this->renderPartial('add-basic',
                 [
                     'article' => $article,

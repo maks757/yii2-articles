@@ -9,11 +9,41 @@ use bl\articles\common\entities\Category;
 use bl\articles\common\entities\CategoryTranslation;
 use bl\multilang\entities\Language;
 use Yii;
+use yii\filters\AccessControl;
 use yii\helpers\Url;
 use yii\web\Controller;
 
 class CategoryController extends Controller
 {
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index'],
+                        'roles' => ['viewCategoryList'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['save', 'switch-show'],
+                        'roles' => ['editCategories'],
+                        'allow' => true,
+                    ],
+                    [
+                        'actions' => ['delete'],
+                        'roles' => ['deleteCategories'],
+                        'allow' => true,
+                    ],
+                ],
+            ]
+        ];
+    }
 
     public function actionIndex()
     {
