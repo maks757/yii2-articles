@@ -119,3 +119,18 @@ INSTALLATION
 	yourbackend.url/articles/article
 	
 	**YOU MUST CONFIGURE IMAGABLE COMPONENT**
+
+**Roles and its permissions:**
+
+_articleManager_
+- viewArticleList
+- editArticles
+- deleteArticles
+
+_articleCategoryManager_
+- viewCategoryList
+- editCategories
+- deleteCategories
+
+_articleAdministrator_
+extends category and article manager's permissions. 
