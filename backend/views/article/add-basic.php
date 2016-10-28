@@ -182,6 +182,12 @@ $this->title = 'Save article';
                     ]
                 ])->label('View Name')
                 ?>
+                <?= $form->field($article, 'key', [
+                    'inputOptions' => [
+                        'class' => 'form-control'
+                    ]
+                ])->label('Key')
+                ?>
                 <input type="submit" class="btn btn-primary pull-right" value="<?= 'Save' ?>">
             </div>
         </div>

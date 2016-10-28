@@ -17,6 +17,8 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $text
  * @property string $short_text
+ *
+ * @property Language $language
  */
 class ArticleTranslation extends ActiveRecord
 {

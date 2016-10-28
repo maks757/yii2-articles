@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @author Gutsulyak Vadim <guts.vadim@gmail.com>
  *
  * @property integer $id
+ * @property string $key
  * @property integer $category_id
  * @property integer $author_id
  * @property boolean $show
@@ -54,7 +55,8 @@ class Article extends ActiveRecord
     {
         return [
             ['category_id', 'number'],
-            [['view', 'color'], 'string']
+            [['view', 'color'], 'string'],
+            ['key', 'unique']
         ];
     }
 
