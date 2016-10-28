@@ -88,6 +88,7 @@ $this->title = 'Save article';
                     'clientOptions' => [
                         'relative_urls' => true,
                         'remove_script_host' => false,
+                        'verify_html' => false,
                         'plugins' => [
                             'textcolor colorpicker',
                             "advlist autolink lists link charmap print preview anchor",
@@ -110,6 +111,7 @@ $this->title = 'Save article';
                     'clientOptions' => [
                         'relative_urls' => true,
 //                        'remove_script_host' => false,
+                        'verify_html' => false,
                         'plugins' => [
                             'textcolor colorpicker',
                             "advlist autolink lists link charmap print preview anchor",
@@ -117,7 +119,7 @@ $this->title = 'Save article';
                             "insertdatetime media table contextmenu paste",
                             'image'
                         ],
-                        'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+                        'toolbar' => "undo redo | forecolor backcolor | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
                     ]
                 ])->label('Full description')
                 ?>
