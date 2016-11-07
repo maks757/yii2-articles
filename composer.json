@@ -1,5 +1,5 @@
 {
-  "name": "black-lamp/yii2-articles",
+  "name": "maks757/yii2-articles",
   "description": "Articles extension for the Yii framework",
   "keywords": ["yii2", "articles"],
   "type": "yii2-extension",
@@ -21,12 +21,12 @@
 
     "yii2tech/ar-position": "*",
     
-    "black-lamp/yii2-multi-lang": "1.1.*",
-    "black-lamp/yii2-seo": "0.1.*"
+    "maks757/yii2-multi-lang": "*",
+    "black-lamp/yii2-seo": "*"
   },
   "autoload": {
     "psr-4": {
-      "bl\\articles\\": ""
+      "maks757\\articles\\": ""
     }
   }
 }

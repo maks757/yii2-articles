@@ -1,9 +1,9 @@
 <?php
 
-namespace bl\articles\backend;
+namespace maks757\articles\backend;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'bl\articles\backend\controllers';
+    public $controllerNamespace = 'maks757\articles\backend\controllers';
     public $defaultRoute = 'article';
 }

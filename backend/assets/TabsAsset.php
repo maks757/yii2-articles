@@ -1,5 +1,5 @@
 <?php
-namespace bl\articles\backend\assets;
+namespace maks757\articles\backend\assets;
 use yii\web\AssetBundle;
 
 /**

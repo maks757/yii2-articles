@@ -1,6 +1,6 @@
 <?php
-use bl\articles\common\entities\CategoryTranslation;
-use bl\multilang\entities\Language;
+use maks757\articles\common\entities\CategoryTranslation;
+use maks757\multilang\entities\Language;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 

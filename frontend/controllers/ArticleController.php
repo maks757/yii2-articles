@@ -1,7 +1,7 @@
 <?php
-namespace bl\articles\frontend\controllers;
+namespace maks757\articles\frontend\controllers;
 
-use bl\articles\common\entities\Article;
+use maks757\articles\common\entities\Article;
 use yii\web\Controller;
 
 /**

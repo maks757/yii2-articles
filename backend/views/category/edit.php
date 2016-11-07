@@ -1,8 +1,8 @@
 <?php
-use bl\articles\common\entities\Category;
-use bl\articles\common\entities\CategoryTranslation;
+use maks757\articles\common\entities\Category;
+use maks757\articles\common\entities\CategoryTranslation;
 use dosamigos\tinymce\TinyMce;
-use bl\multilang\entities\Language;
+use maks757\multilang\entities\Language;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 

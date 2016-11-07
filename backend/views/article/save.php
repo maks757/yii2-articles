@@ -1,10 +1,10 @@
 <?php
-use bl\articles\backend\assets\TabsAsset;
-use bl\articles\backend\components\form\ArticleImageForm;
-use bl\articles\common\entities\Article;
-use bl\articles\common\entities\ArticleTranslation;
-use bl\articles\common\entities\Category;
-use bl\multilang\entities\Language;
+use maks757\articles\backend\assets\TabsAsset;
+use maks757\articles\backend\components\form\ArticleImageForm;
+use maks757\articles\common\entities\Article;
+use maks757\articles\common\entities\ArticleTranslation;
+use maks757\articles\common\entities\Category;
+use maks757\multilang\entities\Language;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\Pjax;

@@ -3,11 +3,11 @@
 /*
  * @author Maxim Cherednyk maks757q@gmail.com
 */
-namespace bl\articles\backend\controllers;
+namespace maks757\articles\backend\controllers;
 
-use bl\articles\common\entities\Category;
-use bl\articles\common\entities\CategoryTranslation;
-use bl\multilang\entities\Language;
+use maks757\articles\common\entities\Category;
+use maks757\articles\common\entities\CategoryTranslation;
+use maks757\multilang\entities\Language;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Url;

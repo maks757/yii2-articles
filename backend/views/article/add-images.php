@@ -6,9 +6,9 @@
  * @var $image_form ArticleImageForm
  * @var $languageId Language
  */
-use bl\articles\backend\components\form\ArticleImageForm;
-use bl\articles\common\entities\Article;
-use bl\multilang\entities\Language;
+use maks757\articles\backend\components\form\ArticleImageForm;
+use maks757\articles\common\entities\Article;
+use maks757\multilang\entities\Language;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;

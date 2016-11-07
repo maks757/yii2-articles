@@ -1,7 +1,7 @@
 <?php
-namespace bl\articles\common\entities;
+namespace maks757\articles\common\entities;
 
-use bl\multilang\behaviors\TranslationBehavior;
+use maks757\multilang\behaviors\TranslationBehavior;
 use yii\db\ActiveRecord;
 
 /**

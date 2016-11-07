@@ -1,6 +1,6 @@
 <?php
 
-use bl\articles\common\entities\Article;
+use maks757\articles\common\entities\Article;
 
 /**
  * @author Gutsulyak Vadim <guts.vadim@gmail.com>
@@ -10,7 +10,7 @@ use bl\articles\common\entities\Article;
 
 ?>
 
-<?= \bl\articles\frontend\widgets\ArticlesNav::widget([
+<?= \maks757\articles\frontend\widgets\ArticlesNav::widget([
     'activeItemTemplate' => '<b>{label}</b>'
 ]) ?>
 

@@ -1,5 +1,5 @@
 <?php
-use bl\articles\common\entities\Category;
+use maks757\articles\common\entities\Category;
 
 /**
  * @author Gutsulyak Vadim <guts.vadim@gmail.com>

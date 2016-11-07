@@ -1,6 +1,6 @@
 <?php
 
-namespace bl\articles\backend\components\form;
+namespace maks757\articles\backend\components\form;
 use Yii;
 use yii\base\Model;
 use yii\web\UploadedFile;

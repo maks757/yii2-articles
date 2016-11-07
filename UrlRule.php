@@ -1,11 +1,11 @@
 <?php
-namespace bl\articles;
+namespace maks757\articles;
 
-use bl\articles\common\entities\Article;
-use bl\articles\common\entities\ArticleTranslation;
-use bl\articles\common\entities\Category;
-use bl\articles\common\entities\CategoryTranslation;
-use bl\multilang\entities\Language;
+use maks757\articles\common\entities\Article;
+use maks757\articles\common\entities\ArticleTranslation;
+use maks757\articles\common\entities\Category;
+use maks757\articles\common\entities\CategoryTranslation;
+use maks757\multilang\entities\Language;
 use bl\seo\entities\SeoData;
 use Yii;
 use yii\base\Object;

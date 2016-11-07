@@ -1,8 +1,8 @@
 <?php
 
-namespace bl\articles\frontend;
+namespace maks757\articles\frontend;
 
 class Module extends \yii\base\Module
 {
-    public $controllerNamespace = 'bl\articles\frontend\controllers';
+    public $controllerNamespace = 'maks757\articles\frontend\controllers';
 }

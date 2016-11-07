@@ -1,8 +1,8 @@
 <?php
-namespace bl\articles\frontend\widgets;
+namespace maks757\articles\frontend\widgets;
 
-use bl\articles\common\entities\Article;
-use bl\articles\common\entities\Category;
+use maks757\articles\common\entities\Article;
+use maks757\articles\common\entities\Category;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;

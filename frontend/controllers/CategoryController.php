@@ -1,7 +1,7 @@
 <?php
-namespace bl\articles\frontend\controllers;
+namespace maks757\articles\frontend\controllers;
 
-use bl\articles\common\entities\Category;
+use maks757\articles\common\entities\Category;
 use yii\web\Controller;
 
 /**

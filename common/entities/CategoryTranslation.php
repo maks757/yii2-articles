@@ -1,7 +1,7 @@
 <?php
-namespace bl\articles\common\entities;
+namespace maks757\articles\common\entities;
 
-use bl\multilang\entities\Language;
+use maks757\multilang\entities\Language;
 use bl\seo\behaviors\SeoDataBehavior;
 use Yii;
 use yii\db\ActiveRecord;
